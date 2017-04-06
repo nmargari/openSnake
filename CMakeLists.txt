@@ -12,7 +12,6 @@ set (openSnake_SRC
     )
 
 set(CMAKE_BUILD_DIR ${PROJECT_SOURCE_DIR}/build)
-file(MAKE_DIRECTORY ${CMAKE_BUILD_DIR})
 
 add_executable(${PROJECT_NAME} ${openSnake_SRC})
 target_link_libraries(
