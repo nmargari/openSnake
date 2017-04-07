@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <limits>
 
 #include <GL/glut.h>
 
@@ -23,11 +24,21 @@ int main(int argc, char** argv)
 	coord *coordinates;
 	int x, y, z;
 
-//Getting and setting our data
-	cout << "Grid size: ";
-	cin >> grid_size;
-	cout << "Snake number: ";
-	cin >> snake_num;
+        while((cout << "Grid size: ") &&
+               !(cin >> grid_size))
+               {
+                   cerr << "Not a numeric value. ";
+                   cin.clear();
+                   cin.ignore(numeric_limits<streamsize>::max(), '\n');
+               }
+
+        while ((cout << "Snake number: ") &&
+              !(cin >> snake_num))
+              {
+                  cerr << "Not a numeric value. ";
+                  cin.clear();
+                  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+              }
 
 	snake_array = new snake [snake_num];
 
@@ -47,7 +58,7 @@ int main(int argc, char** argv)
 				grid_table[i][j][k] = 0;
 			}
 		}
-		
+
 	}*/
 
 	for(int i = 0; i < snake_num; i++)
@@ -63,16 +74,16 @@ int main(int argc, char** argv)
 		cin >> x >> y >> z;
 		snake_array[i].set_coordinates(x, y, z);
 	}
-	
+
     	glutInit(&argc, argv);
     	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     	glutInitWindowSize (WIN_X_SIZE, WIN_Y_SIZE);
-    	glutCreateWindow("Open Snake"); 
+    	glutCreateWindow("Open Snake");
 
     	init ();
 
-    	glutReshapeFunc(reshape); 
-    	glutDisplayFunc(display); 
+    	glutReshapeFunc(reshape);
+    	glutDisplayFunc(display);
     	glutKeyboardFunc(keyboard);
 	//glutKeyboardUpFunc(keyboard);
 	//glutIgnoreKeyRepeat(1);
@@ -84,4 +95,4 @@ int main(int argc, char** argv)
 
     	return 0;
 }
-    
+
