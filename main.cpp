@@ -1,14 +1,23 @@
 #include <iostream>
 #include <stdlib.h>
 #include <limits>
+
+#ifdef __linux__                                            // include this only on Linux
+
 #include <getopt.h>
+
+#endif                                                      // End
 
 #include <GL/glut.h>
 
 #include "defines.h"
 
-int grid_size;
-int snake_num;
+// TODO Shouldn't these be unsigned ints?
+
+int grid_size{0};
+int snake_num{0};
+// TODO Double check what *snake_size does and if snakeSize is not needed!
+int snakeSize{0};
 int *snake_size;
 int **snake_position;
 int ***grid;
@@ -25,29 +34,54 @@ int main(int argc, char** argv)
 	coord *coordinates;
 	int x, y, z, option{0};
 
-	while ((option = getopt(argc, argv, "s:n:")))
+	// Decide which code you will compile because Win don't support getopt
+#ifdef __linux__
+
+        char *sGrid, *nSnake, *snkSize;
+	while ((option = getopt(argc, argv, "g:n:s:")) != -1)
          {
                  switch (option)
                  {
-                     case 's' : grid_size = atoi(optarg);
+                     case 'g' :
+                         grid_size = strtol(optarg, &sGrid, 10);
+                         cout << "Grid's size = " << grid_size << '\n';
                          break;
 
-                     case 'n' : snake_num = atoi(optarg);
+                     case 'n' :
+                         snake_num = strtol(optarg, &nSnake, 10);
+                         cout << "Number of snakes = " << snake_num << '\n';
                          break;
+
+                     case 's' :
+                         snakeSize = strtol(optarg, &snkSize, 10);
+                         // I know this will annoy you Nikos :D
+                         cout << "Size of "
+                           << ((snakeSize == 1)  ? "snake = " : "snakes = ")
+                           << snakeSize << '\n';
 
                      default :
-                         cerr << "Usage: openSnake -s Value_Foo -n value_Bar\n";
-                         exit(EXIT_FAILURE);
+                         break;
                 }
         }
 
-        if (grid_size <= 0 || snake_num <= 0)
+        // Either the user didn't provide a valid number or
+        // the user provided stupid numbers
+        if (grid_size <= 0 || snake_num <= 0 || snakeSize <= 0)
         {
-            cerr << "Usage: openSnake -s value_Foo -n value_Bar\n";
+            cerr << "Usage: openSnake -g value_Foo -n value_Bar -s size_of_snake\n";
+            cerr << "Make sure you didn't enter a negative value\n";
             exit(EXIT_FAILURE);
         }
 
-        /*while((cout << "Grid size: ") &&
+        // If optopt is non-zero then the user gave an unknown option
+        if (optopt)
+        {
+            exit(EXIT_FAILURE);
+        }
+
+# elif __WIN32
+
+        while((cout << "Grid size: ") &&
                !(cin >> grid_size))
                {
                    cerr << "Not a numeric value. ";
@@ -61,7 +95,8 @@ int main(int argc, char** argv)
                   cerr << "Not a numeric value. ";
                   cin.clear();
                   cin.ignore(numeric_limits<streamsize>::max(), '\n');
-              }*/
+              }
+#endif
 
 	snake_array = new snake [snake_num];
 
@@ -86,8 +121,12 @@ int main(int argc, char** argv)
 
 	for(int i = 0; i < snake_num; i++)
 	{
-		cout << "Snake's #" << i + 1 << " size: ";
-		cin >> snake_array[i].size;
+                 if (!snakeSize)
+                 {
+                     cout << "Snake's #" << i + 1 << " size: ";
+                     cin >> snake_array[i].size;
+                 }
+
 	}
 
 	for(int i = 0; i < snake_num; i++)
