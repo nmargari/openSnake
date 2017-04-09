@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <limits>
+#include <getopt.h>
 
 #include <GL/glut.h>
 
@@ -22,9 +23,31 @@ using namespace std;
 int main(int argc, char** argv)
 {
 	coord *coordinates;
-	int x, y, z;
+	int x, y, z, option{0};
 
-        while((cout << "Grid size: ") &&
+	while ((option = getopt(argc, argv, "s:n:")))
+         {
+                 switch (option)
+                 {
+                     case 's' : grid_size = atoi(optarg);
+                         break;
+
+                     case 'n' : snake_num = atoi(optarg);
+                         break;
+
+                     default :
+                         cerr << "Usage: openSnake -s Value_Foo -n value_Bar\n";
+                         exit(EXIT_FAILURE);
+                }
+        }
+
+        if (grid_size <= 0 || snake_num <= 0)
+        {
+            cerr << "Usage: openSnake -s value_Foo -n value_Bar\n";
+            exit(EXIT_FAILURE);
+        }
+
+        /*while((cout << "Grid size: ") &&
                !(cin >> grid_size))
                {
                    cerr << "Not a numeric value. ";
@@ -38,7 +61,7 @@ int main(int argc, char** argv)
                   cerr << "Not a numeric value. ";
                   cin.clear();
                   cin.ignore(numeric_limits<streamsize>::max(), '\n');
-              }
+              }*/
 
 	snake_array = new snake [snake_num];
 
