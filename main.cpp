@@ -30,32 +30,38 @@ using namespace std;
 int main(int argc, char** argv)
 {
 	coord *coordinates;
-	int x, y, z, option{0};
+	int x{-1}, y{-1}, z{-1}, option{0};
 
 	// Decide which code you will compile because Win don't support getopt
 #ifdef __linux__
 
+        // Use abs() just in case a negative num is given. I chose not to
+        // use unsigned for initialization purposes.
+
         char *sGrid, *nSnake, *snkSize;
-	while ((option = getopt(argc, argv, "g:n:s:")) != -1)
+	while ((option = getopt(argc, argv, "g:n:s:ch")) != -1)
          {
                  switch (option)
                  {
                      case 'g' :
                          grid_size = abs(strtol(optarg, &sGrid, 10));
-                         cout << "Grid's size = " << grid_size << '\n';
                          break;
 
                      case 'n' :
                          snake_num = abs(strtol(optarg, &nSnake, 10));
-                         cout << "Number of snakes = " << snake_num << '\n';
                          break;
 
                      case 's' :
                          snakeSize = abs(strtol(optarg, &snkSize, 10));
-                         // I know this will annoy you Nikos :D
-                         cout << "Size of "
-                           << ((snakeSize == 1)  ? "snake = " : "snakes = ")
-                           << snakeSize << '\n';
+                         break;
+
+                     case 'c' :
+                         x = y = z = 0;
+                         break;
+
+                     case 'h' :
+                         print_usage();
+                         exit(EXIT_SUCCESS);
 
                      default :
                          break;
@@ -72,8 +78,8 @@ int main(int argc, char** argv)
         // the user provided stupid numbers
         if (grid_size <= 0 || snake_num <= 0 || snakeSize <= 0)
         {
-            cerr << "Usage : openSnake -g NUM -n NUM -s NUM\n";
-            cerr << "Make sure you didn't enter zero as a value\n";
+            print_usage();
+            cerr << "\nMake sure you didn't give a zero value";
             exit(EXIT_FAILURE);
         }
 
@@ -135,8 +141,10 @@ int main(int argc, char** argv)
 	for(int i = 0; i < snake_num; i++)
 	{
 		coordinates = new coord [2 * snake_array[i].size - 1];
-		cout << "Position for snake #" << i + 1 << "(x,y,z): ";
-		cin >> x >> y >> z;
+		if ((x < 0) || (y < 0) || (z < 0)){
+                      cout << "Position for snake #" << i + 1 << "(x,y,z): ";
+                      cin >> x >> y >> z;
+                }
 		snake_array[i].set_coordinates(x, y, z);
 	}
 

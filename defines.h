@@ -47,3 +47,5 @@ void createSphere(sphere *s);
 float randomFNumber();
 void createAxis();
 
+// TODO Nikos, check this prototypes and in which header they should belong
+void print_usage();

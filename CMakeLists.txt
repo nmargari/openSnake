@@ -19,6 +19,7 @@ set (openSnake_SRC
     main.cpp
     snake.cpp
     sphere.cpp
+    helper_functions.cpp
     )
 
 set(CMAKE_BUILD_DIR ${PROJECT_SOURCE_DIR}/build)
