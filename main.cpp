@@ -38,7 +38,7 @@ int main(int argc, char** argv)
         // Use abs() just in case a negative num is given. I chose not to
         // use unsigned for initialization purposes.
 
-        // Flags for mandatory options
+        // Flags for mandatory options, grid_size, snake_num, snake_size
         bool gflag{false}, nflag{false}, sflag{false};
 
         // TODO Decide whether c.l. arguments will be mandatory or optional
@@ -85,7 +85,8 @@ int main(int argc, char** argv)
                      case 'h' :
                      case '?' :
                          print_usage();
-                         exit(EXIT_SUCCESS);
+                         if (option == 'h') exit(EXIT_SUCCESS);
+                         else exit(EXIT_FAILURE);
                          break;
 
                      case ':' :
@@ -115,7 +116,7 @@ int main(int argc, char** argv)
             exit(EXIT_FAILURE);
         }
 
-# elif __WIN32
+# elif __WIN32                                              // TODO Must check Win build too...
 
         while((cout << "Grid size: ") &&
                !(cin >> grid_size))
@@ -169,13 +170,11 @@ int main(int argc, char** argv)
 
 	}
 
-        int temp{0};
 	for(int i = 0; i < snake_num; i++)
 	{
 		coordinates = new coord [2 * snake_array[i].size - 1];
-		temp = i + 1;
 		if ((x < 0) || (y < 0) || (z < 0)){
-                      while ((cout << "Position for snake #" << temp << "(x,y,z): ") &&
+                while ((cout << "Position for snake #" << i + 1 << "(x,y,z): ") &&
                       !(cin >> x >> y >> z))
                       {
                           check_cin();

@@ -39,20 +39,20 @@ void check_cin()
 // TODO Not the most elegant solution to warn if an option
 // is missing. Must rethink this check.
 void proccess_flags_status(bool gflag,
-                           bool nflags,
-                           bool sflags)
+                           bool nflag,
+                           bool sflag)
 {
     if (!gflag)
     {
         cerr << "-g is needed!\n";
     }
 
-    if (!nflags)
+    if (!nflag)
     {
         cerr << "-n is needed!\n";
     }
 
-    if (!sflags)
+    if (!sflag)
     {
         cerr << "-s is needed!\n";
     }

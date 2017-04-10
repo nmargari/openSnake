@@ -51,6 +51,6 @@ void createAxis();
 void print_usage();
 void print_version();
 void check_cin();
-void proccess_flags_status(bool gflag, bool nflags, bool sflags);
+void proccess_flags_status(bool gflag, bool nflag, bool sflag);
 void print_about();
 void print_man();
