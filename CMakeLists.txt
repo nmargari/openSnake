@@ -38,4 +38,5 @@ add_executable(${PROJECT_NAME} ${openSnake_SRC})
 target_link_libraries(
     ${PROJECT_NAME}
     ${OPENGL_LIBRARY}
-    ${GLUT_LIBRARIES})
+    ${GLUT_LIBRARIES}
+    )

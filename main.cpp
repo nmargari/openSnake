@@ -1,6 +1,5 @@
 #include <iostream>
 #include <stdlib.h>
-#include <limits>
 
 #ifdef __linux__                                            // include this only on Linux
 
@@ -11,6 +10,7 @@
 #include <GL/glut.h>
 
 #include "defines.h"
+#include "openSnakeConfig.h"
 
 int grid_size{-1};
 int snake_num{-1};
@@ -38,33 +38,59 @@ int main(int argc, char** argv)
         // Use abs() just in case a negative num is given. I chose not to
         // use unsigned for initialization purposes.
 
-        // TODO Decide whether c.l. arguments will be obligatory or optional
+        // Flags for mandatory options
+        bool gflag{false}, nflag{false}, sflag{false};
+
+        // TODO Decide whether c.l. arguments will be mandatory or optional
+
+        struct option longopts[] = {
+            {"about", no_argument, NULL, 'a'},
+            {"grid-size", required_argument, NULL, 'g'},
+            {"number-snake", required_argument, NULL, 'n'},
+            {"snake-size", required_argument, NULL, 's'},
+            {"verbose", no_argument, NULL, 'v'},
+            {"help", no_argument, NULL, 'h'},
+            {0, 0, 0, 0}
+        };
 
         char *sGrid, *nSnake, *snkSize;
-	while ((option = getopt(argc, argv, "g:n:s:chv")) != -1)
+	while ((option = getopt_long(argc, argv, "g:n:s:chvam", longopts, NULL)) != -1)
          {
                  switch (option)
                  {
+                     case 'a' :
+                         print_about();
+                         break;
+
                      case 'g' :
                          grid_size = abs(strtol(optarg, &sGrid, 10));
+                         gflag = true;
                          break;
 
                      case 'n' :
                          snake_num = abs(strtol(optarg, &nSnake, 10));
+                         nflag = true;
                          break;
 
                      case 's' :
                          snakeSize = abs(strtol(optarg, &snkSize, 10));
+                         sflag = true;
                          break;
 
                      case 'c' :
                          x = y = z = 0;
                          break;
 
+                     // if -h and/or unkown arg is given then...
                      case 'h' :
+                     case '?' :
                          print_usage();
                          exit(EXIT_SUCCESS);
                          break;
+
+                     case ':' :
+                         cerr << PROJECT_NAME << ": option"
+                               << (char)optopt << " requires an argumen\n";
 
                      case 'v' :
                          print_version();
@@ -76,11 +102,9 @@ int main(int argc, char** argv)
                 }
         }
 
-        // If optopt is non-zero then the user gave an unknown option
-        if (optopt)
-        {
-            exit(EXIT_FAILURE);
-        }
+        proccess_flags_status(gflag,
+                              nflag,
+                              sflag);
 
         // Either the user didn't provide a valid number or
         // the user provided stupid numbers
@@ -96,17 +120,13 @@ int main(int argc, char** argv)
         while((cout << "Grid size: ") &&
                !(cin >> grid_size))
                {
-                   cerr << "Not a numeric value. ";
-                   cin.clear();
-                   cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                   check_cin();
                }
 
         while ((cout << "Snake number: ") &&
               !(cin >> snake_num))
               {
-                  cerr << "Not a numeric value. ";
-                  cin.clear();
-                  cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                  check_cin();
               }
 #endif
 
@@ -135,8 +155,11 @@ int main(int argc, char** argv)
 	{
                  if (!(snakeSize))
                  {
-                     cout << "Snake's #" << i + 1 << " size: ";
-                     cin >> snake_array[i].size;
+                     while ((cout << "Snake's # " << i + 1 << "size: ") &&
+                     (!cin >> snake_array[i].size))
+                     {
+                         check_cin();
+                     }
                  }
                  else
                  {
@@ -146,12 +169,17 @@ int main(int argc, char** argv)
 
 	}
 
+        int temp{0};
 	for(int i = 0; i < snake_num; i++)
 	{
 		coordinates = new coord [2 * snake_array[i].size - 1];
+		temp = i + 1;
 		if ((x < 0) || (y < 0) || (z < 0)){
-                      cout << "Position for snake #" << i + 1 << "(x,y,z): ";
-                      cin >> x >> y >> z;
+                      while ((cout << "Position for snake #" << temp << "(x,y,z): ") &&
+                      !(cin >> x >> y >> z))
+                      {
+                          check_cin();
+                      }
                 }
 		snake_array[i].set_coordinates(x, y, z);
 	}
@@ -160,6 +188,7 @@ int main(int argc, char** argv)
     	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     	glutInitWindowSize (WIN_X_SIZE, WIN_Y_SIZE);
     	glutCreateWindow("Open Snake");
+    	//glutCreateWindow(PROJECT_NAME);
 
     	init ();
 
