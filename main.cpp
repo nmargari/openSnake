@@ -38,8 +38,10 @@ int main(int argc, char** argv)
         // Use abs() just in case a negative num is given. I chose not to
         // use unsigned for initialization purposes.
 
+        // TODO Decide whether c.l. arguments will be obligatory or optional
+
         char *sGrid, *nSnake, *snkSize;
-	while ((option = getopt(argc, argv, "g:n:s:ch")) != -1)
+	while ((option = getopt(argc, argv, "g:n:s:chv")) != -1)
          {
                  switch (option)
                  {
@@ -62,6 +64,12 @@ int main(int argc, char** argv)
                      case 'h' :
                          print_usage();
                          exit(EXIT_SUCCESS);
+                         break;
+
+                     case 'v' :
+                         print_version();
+                         exit(EXIT_SUCCESS);
+                         break;
 
                      default :
                          break;

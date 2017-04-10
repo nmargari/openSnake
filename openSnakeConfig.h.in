@@ -1,0 +1,5 @@
+#define openSnake_VERSION_MAJOR @openSnake_VERSION_MAJOR@
+#define openSnake_VERSION_MINOR @openSnake_VERSION_MINOR@
+#define PROJECT_NAME  "@PROJECT_NAME@"
+
+//I don't know why the PROJECT_NAME needs quotes

@@ -1,6 +1,16 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(openSnake)
 
+set (openSnake_VERSION_MAJOR 0)
+set (openSnake_VERSION_MINOR 1)
+
+# configure a header file to pass some of the CMake settings
+# to the source code
+configure_file(
+    "${PROJECT_SOURCE_DIR}/openSnakeConfig.h.in"
+    "${PROJECT_SOURCE_DIR}/openSnakeConfig.h"
+    )
+
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
 
