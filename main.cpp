@@ -12,12 +12,10 @@
 
 #include "defines.h"
 
-// TODO Shouldn't these be unsigned ints?
-
-int grid_size{0};
-int snake_num{0};
+int grid_size{-1};
+int snake_num{-1};
 // TODO Double check what *snake_size does and if snakeSize is not needed!
-int snakeSize{0};
+int snakeSize{-1};
 int *snake_size;
 int **snake_position;
 int ***grid;
@@ -43,17 +41,17 @@ int main(int argc, char** argv)
                  switch (option)
                  {
                      case 'g' :
-                         grid_size = strtol(optarg, &sGrid, 10);
+                         grid_size = abs(strtol(optarg, &sGrid, 10));
                          cout << "Grid's size = " << grid_size << '\n';
                          break;
 
                      case 'n' :
-                         snake_num = strtol(optarg, &nSnake, 10);
+                         snake_num = abs(strtol(optarg, &nSnake, 10));
                          cout << "Number of snakes = " << snake_num << '\n';
                          break;
 
                      case 's' :
-                         snakeSize = strtol(optarg, &snkSize, 10);
+                         snakeSize = abs(strtol(optarg, &snkSize, 10));
                          // I know this will annoy you Nikos :D
                          cout << "Size of "
                            << ((snakeSize == 1)  ? "snake = " : "snakes = ")
@@ -64,18 +62,18 @@ int main(int argc, char** argv)
                 }
         }
 
+        // If optopt is non-zero then the user gave an unknown option
+        if (optopt)
+        {
+            exit(EXIT_FAILURE);
+        }
+
         // Either the user didn't provide a valid number or
         // the user provided stupid numbers
         if (grid_size <= 0 || snake_num <= 0 || snakeSize <= 0)
         {
-            cerr << "Usage: openSnake -g value_Foo -n value_Bar -s size_of_snake\n";
-            cerr << "Make sure you didn't enter a negative value\n";
-            exit(EXIT_FAILURE);
-        }
-
-        // If optopt is non-zero then the user gave an unknown option
-        if (optopt)
-        {
+            cerr << "Usage : openSnake -g NUM -n NUM -s NUM\n";
+            cerr << "Make sure you didn't enter zero as a value\n";
             exit(EXIT_FAILURE);
         }
 
@@ -121,10 +119,15 @@ int main(int argc, char** argv)
 
 	for(int i = 0; i < snake_num; i++)
 	{
-                 if (!snakeSize)
+                 if (!(snakeSize))
                  {
                      cout << "Snake's #" << i + 1 << " size: ";
                      cin >> snake_array[i].size;
+                 }
+                 else
+                 {
+                     // Append the command line argument
+                     snake_array[i].size = snakeSize;
                  }
 
 	}
