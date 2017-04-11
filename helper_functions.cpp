@@ -1,7 +1,9 @@
 #include <iostream>
 #include "openSnakeConfig.h"
 #include "defines.h"
+#include "helper_functions.h"
 #include <limits>
+#include <GL/glut.h>
 
 using namespace std;
 
@@ -17,7 +19,7 @@ void print_usage()
     cout << " -g, --grid-size N \t Size for grid\n";
     cout << " -h, --help \t\t Print this message and exit\n";
     cout << " -n, --number-snakes N\t How many snakes will be created\n";
-    cout << " -v, --verbose \t\t Print version and exit\n";
+    cout << " -v, --version \t\t Print version and exit\n";
     cout << " -s, --snake-size N \t Size of the snake(s)";
     cout << endl;
 }
@@ -70,4 +72,31 @@ void print_man(){
     char msg_usage[] = "manual..\n";
     cout << msg_usage;
 }
+
+
+
+void menu (int num){
+    if (!num){
+        glutDestroyWindow(window);
+        exit(0);
+    }else{
+        value = num;
+    }
+    glutPostRedisplay();
+}
+
+void createMenu(void){
+    submenu_id = glutCreateMenu(menu);
+    menu_id = glutCreateMenu(menu);
+
+    glutAddMenuEntry("Quit " PROJECT_NAME, 0);
+    glutAddSubMenu("Yes", 0);
+    glutAttachMenu(GLUT_LEFT_BUTTON);
+}
+
+
+
+
+
+
 

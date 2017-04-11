@@ -7,9 +7,11 @@
 
 #endif                                                      // End
 
+#include <GL/eglew.h>
 #include <GL/glut.h>
 
 #include "defines.h"
+#include "helper_functions.h"
 #include "openSnakeConfig.h"
 
 int grid_size{-1};
@@ -48,7 +50,7 @@ int main(int argc, char** argv)
             {"grid-size", required_argument, NULL, 'g'},
             {"number-snake", required_argument, NULL, 'n'},
             {"snake-size", required_argument, NULL, 's'},
-            {"verbose", no_argument, NULL, 'v'},
+            {"version", no_argument, NULL, 'v'},
             {"help", no_argument, NULL, 'h'},
             {0, 0, 0, 0}
         };
@@ -186,8 +188,9 @@ int main(int argc, char** argv)
     	glutInit(&argc, argv);
     	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     	glutInitWindowSize (WIN_X_SIZE, WIN_Y_SIZE);
-    	glutCreateWindow("Open Snake");
+    	window = glutCreateWindow("Open Snake");
     	//glutCreateWindow(PROJECT_NAME);
+    	createMenu();
 
     	init ();
 

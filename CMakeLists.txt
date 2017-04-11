@@ -13,6 +13,7 @@ configure_file(
 
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
+find_package(GLEW REQUIRED)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     #Force -Wall to catch every little warning
@@ -39,4 +40,5 @@ target_link_libraries(
     ${PROJECT_NAME}
     ${OPENGL_LIBRARY}
     ${GLUT_LIBRARIES}
+    ${GLEW_LIBRARIES}
     )
