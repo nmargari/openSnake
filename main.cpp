@@ -7,7 +7,6 @@
 
 #endif                                                      // End
 
-#include <GL/eglew.h>
 #include <GL/glut.h>
 
 #include "defines.h"
@@ -93,7 +92,7 @@ int main(int argc, char** argv)
 
                      case ':' :
                          cerr << PROJECT_NAME << ": option"
-                               << (char)optopt << " requires an argumen\n";
+                               << (char)optopt << " requires an argument\n";
 
                      case 'v' :
                          print_version();
@@ -105,12 +104,10 @@ int main(int argc, char** argv)
                 }
         }
 
-        proccess_flags_status(gflag,
-                              nflag,
-                              sflag);
+        proccess_flags_status(gflag, nflag, sflag);
 
         // Either the user didn't provide a valid number or
-        // the user provided stupid numbers
+        // the user provided 0
         if (grid_size <= 0 || snake_num <= 0 || snakeSize <= 0)
         {
             print_usage();
@@ -189,7 +186,7 @@ int main(int argc, char** argv)
     	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
     	glutInitWindowSize (WIN_X_SIZE, WIN_Y_SIZE);
     	window = glutCreateWindow("Open Snake");
-    	//glutCreateWindow(PROJECT_NAME);
+        //glutCreateWindow(PROJECT_NAME);                    // Use this to automatically set the title
     	createMenu();
 
     	init ();

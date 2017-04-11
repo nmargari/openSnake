@@ -495,9 +495,9 @@ void drawSnake()
 
 void display(void)
 {
-    	glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    	glPushMatrix();
 
+        glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glPushMatrix();
     	glRotatef(rotX,1.0, 0.0, 0.0);
     	glRotatef(rotY,0.0, 1.0, 0.0);
     	glRotatef(rotZ,0.0, 0.0, 1.0);

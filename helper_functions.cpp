@@ -28,7 +28,8 @@ void print_version()
 {
     cout << "You are running " << PROJECT_NAME << " v"
          << openSnake_VERSION_MAJOR << "."
-         << openSnake_VERSION_MINOR << endl;
+         << openSnake_VERSION_MINOR << "."
+         << openSnake_VERSION_PATCH << endl;
 }
 
 void check_cin()
@@ -40,9 +41,7 @@ void check_cin()
 
 // TODO Not the most elegant solution to warn if an option
 // is missing. Must rethink this check.
-void proccess_flags_status(bool gflag,
-                           bool nflag,
-                           bool sflag)
+void proccess_flags_status(bool gflag, bool nflag, bool sflag)
 {
     if (!gflag)
     {
@@ -73,13 +72,11 @@ void print_man(){
     cout << msg_usage;
 }
 
-
-
 void menu (int num){
     if (!num){
         glutDestroyWindow(window);
-        exit(0);
-    }else{
+        exit(EXIT_SUCCESS);
+    }else {
         value = num;
     }
     glutPostRedisplay();
@@ -90,8 +87,7 @@ void createMenu(void){
     menu_id = glutCreateMenu(menu);
 
     glutAddMenuEntry("Quit " PROJECT_NAME, 0);
-    glutAddSubMenu("Yes", 0);
-    glutAttachMenu(GLUT_LEFT_BUTTON);
+    glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
 
 

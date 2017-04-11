@@ -3,6 +3,7 @@ project(openSnake)
 
 set (openSnake_VERSION_MAJOR 0)
 set (openSnake_VERSION_MINOR 1)
+set (openSnake_VERSION_PATCH 0)
 
 # configure a header file to pass some of the CMake settings
 # to the source code
@@ -13,7 +14,6 @@ configure_file(
 
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
-find_package(GLEW REQUIRED)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     #Force -Wall to catch every little warning
