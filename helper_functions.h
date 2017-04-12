@@ -2,13 +2,15 @@
 #include <string>
 #include <iostream>
 
+/*TODO OBSOLOTE,  delete?
 void print_usage();
 void print_version();
 std::string get_version();
-void check_cin();
 void proccess_flags_status ( bool gflag, bool nflag, bool sflag );
 void print_about();
-void print_man();
+void print_man();*/
+
+void check_cin();
 
 static int window;
 static int menu_id;

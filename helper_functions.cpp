@@ -8,7 +8,7 @@
 
 using namespace std;
 
-void print_usage()
+/*void print_usage()
 {
     cout << "\nUsage : openSnake -[OPTION] NUMBER\n\n";
     cout << " -a, --about\t\t Print info about the author\n";
@@ -19,7 +19,7 @@ void print_usage()
     cout << " -v, --version \t\t Print version and exit\n";
     cout << " -s, --snake-size N \t Size of the snake(s)";
     cout << endl;
-}
+}*/
 
 /*string get_version()
 {
@@ -38,13 +38,16 @@ void check_cin()
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-void print_about()
+/*void print_about()
 {
     char msg[] = "Credits to Nikos Margaritis\nnick.margas@gmail.com, https://github.com/nmargari/ \n";
     cout << msg << endl;
 
-}
+}*/
 
+
+// I created an-not-usefull menu to Quit,  when rigth click
+//
 void menu (int num)
 {
     if (!num){
@@ -65,14 +68,16 @@ void createMenu(void)
     glutAddMenuEntry("Quit " PROJECT_NAME, 0);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
+//
+// End of the menu
 
+// Program's implementation
 Program::Program()
 {
     m_name = PROJECT_NAME;
     m_version = openSnake_VERSION;
     m_author = AUTHOR_INFO;
 }
-
 
 std::string Program::getVersionStr()
 {

@@ -32,9 +32,9 @@ int main ( int argc, char** argv )
 {
     coord* coordinates;
     int x { -1}, y { -1}, z { -1};
+    Program thisProject;
 
     try {
-        Program thisProject;
 
         // Just a demonstration
         cout << thisProject.getVersionMsg() << endl;
@@ -60,10 +60,16 @@ int main ( int argc, char** argv )
         snakeSize = sizeSnkArg.getValue();
 
         // If the user gave -c, then append default (0) coordinates
-        if (coordSnkArg.getValue()) { x = y = z = 0; }
+        if (coordSnkArg.getValue())
+        {
+            x = y = z = 0;
+        }
 
         // If the user gave -a, then print about info
-        if (aboutArg.getValue()){ print_about(); }
+        if (aboutArg.getValue())
+        {
+            cout << thisProject.authorInfo() << endl;
+        }
 
 
     }
@@ -141,7 +147,7 @@ int main ( int argc, char** argv )
     glutInitDisplayMode ( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
     glutInitWindowSize ( WIN_X_SIZE, WIN_Y_SIZE );
     window = glutCreateWindow ( "Open Snake" );
-    //glutCreateWindow(PROJECT_NAME);                    // Use this to automatically set the title
+    //glutCreateWindow(thisProject.getName());                    // Use this to automatically set the title
     createMenu();
 
     init ();
