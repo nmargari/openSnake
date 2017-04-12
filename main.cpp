@@ -1,17 +1,10 @@
 #include <iostream>
 #include <stdlib.h>
 
-#ifdef _WIN32                                               // If Win, then use "/opt" instead of --opt
-# define TCLAP_NAMESTARTSTRING "~~"
-# define TCLAP_FLAGSTARTSTRING "/"
-#endif
-#include <tclap/CmdLine.h>
-
 #include <GL/glut.h>
 
 #include "defines.h"
 #include "helper_functions.h"
-#include "openSnakeConfig.h"
 
 int grid_size {-1};
 int snake_num {-1};
@@ -31,62 +24,33 @@ using namespace std;
 int main ( int argc, char** argv )
 {
     coord* coordinates;
-    int x { -1}, y { -1}, z { -1};
-    Program thisProject;
-
-    try {
-
-        // Just a demonstration
-        cout << thisProject.getVersionMsg() << endl;
-
-        TCLAP::CmdLine cmd("", ' ', thisProject.getVersionStr());
-
-        TCLAP::ValueArg<int> gridSizeArg ( "g", "grid-size", "Size of the grid", true, 0, "int" );
-        cmd.add ( gridSizeArg );
-
-        TCLAP::ValueArg<int> numSnkArg ( "n", "number-snakes", "Number of snakes to create", true, 0, "int" );
-        cmd.add ( numSnkArg );
-
-        TCLAP::ValueArg<int> sizeSnkArg ( "s", "snake-size", "Size of the snake(s)", true, 0, "int" );
-        cmd.add ( sizeSnkArg );
-
-        TCLAP::SwitchArg coordSnkArg ( "c", "coordinates", "Set coordinates to 0", cmd, false );
-        TCLAP::SwitchArg aboutArg("a", "about", "Print info about", cmd, false);
-
-        cmd.parse ( argc, argv );
-
-        grid_size = gridSizeArg.getValue();
-        snake_num = numSnkArg.getValue();
-        snakeSize = sizeSnkArg.getValue();
-
-        // If the user gave -c, then append default (0) coordinates
-        if (coordSnkArg.getValue())
-        {
-            x = y = z = 0;
-        }
-
-        // If the user gave -a, then print about info
-        if (aboutArg.getValue())
-        {
-            cout << thisProject.authorInfo() << endl;
-        }
+    struct XYZ PointOnAxis;
+    struct SizeOptions NumericArgs;
 
 
-    }
-    catch ( TCLAP::ArgException& e )
-    {
-        cerr << "Error : " << e.error() << " for arg "
-             << e.argId() << endl;
-    }
+    // Magic number :( . Abnormal initial value. This will fail if the
+    // user indeed wants the snake to start from (-999, -999, -999)!
+    int x {-999}, y {-999}, z {-999};
+
+    Program thisProject{argc, argv};
+
+    thisProject.handleArguments(PointOnAxis, NumericArgs);
+
+    x = PointOnAxis.x;
+    y = PointOnAxis.y;
+    z = PointOnAxis.z;
+
+    grid_size = NumericArgs.grid_size;
+    snake_num = NumericArgs.snake_num;
+    snakeSize = NumericArgs.snakeSize;
 
     // Either the user didn't provide a valid number or
     // the user provided 0
-    if ( grid_size <= 0 || snake_num <= 0 || snakeSize <= 0 )
+    /*if ( grid_size <= 0 || snake_num <= 0 || snakeSize <= 0 )
     {
-        //print_usage();
         cerr << "\nMake sure you didn't give a zero value";
         exit ( EXIT_FAILURE );
-    }
+    }*/
 
     snake_array = new snake [snake_num];
 
@@ -111,7 +75,7 @@ int main ( int argc, char** argv )
 
     for ( int i = 0; i < snake_num; i++ )
     {
-        if ( ! ( snakeSize ) )
+        if ( ! ( NumericArgs.snakeSize ) )
         {
             while ( ( cout << "Snake's # " << i + 1 << "size: " ) &&
                     ( !cin >> snake_array[i].size ) )
@@ -131,13 +95,13 @@ int main ( int argc, char** argv )
     {
         coordinates = new coord [2 * snake_array[i].size - 1];
 
-        if ( ( x < 0 ) || ( y < 0 ) || ( z < 0 ) )
+        if ( !PointOnAxis.is_set )
         {
-            while ( ( cout << "Position for snake #" << i + 1 << "(x,y,z): " ) &&
-                    ! ( cin >> x >> y >> z ) )
-            {
-                check_cin();
-            }
+            while (cout << "Position for snake #" << i + 1 << "(x,y,z): " &&
+                    !(cin >> x >> y >> z))
+                    {
+                        check_cin();
+                    }
         }
 
         snake_array[i].set_coordinates ( x, y, z );

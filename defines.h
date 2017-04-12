@@ -23,6 +23,7 @@
 
 extern int grid_size;
 extern int snake_num;
+extern int snakeSize;
 extern int *snake_size;
 extern int **snake_position;
 extern int ***grid;

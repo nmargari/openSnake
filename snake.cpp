@@ -254,7 +254,7 @@ again:
 	}
 }
 
-					
+
 
 
 
@@ -272,16 +272,16 @@ again:
 	for(int j = 0; j < 2 * this->size - 1; j++)
 	{
 
-	
+
 		if (j == 0)
 		{
 			x = this->coordinates[j].x;
 			y = this->coordinates[j].y;
 			z = this->coordinates[j].z;
 			//cout << x << " " << y << " " << z << endl;
-again:	
+again:
 			random = randomNumber(0, 5);
-	
+
 			//cout << random << endl;
 			switch (random)
 			{
@@ -331,7 +331,7 @@ again:
 				grid_table[x + grid_size/2][y + grid_size/2][z + grid_size/2 - 1] = 1;
 				break;
 			case OUT:
-				if(z + 1 > grid_size/2 - 1) 
+				if(z + 1 > grid_size/2 - 1)
 					goto again;
 				if(this->coordinates[j].z - 1 <= -grid_size/2.0 - 0.5 || grid_table[x + grid_size/2][y + grid_size/2][z + grid_size/2 + 1] == 1)
 					goto again;
