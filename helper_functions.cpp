@@ -14,6 +14,8 @@
 
 using namespace std;
 
+/////////////////////////////////////////////////////////////////////////
+// Check cin's status and return bool
 bool check_cin()
 {
     cerr << "Not a numeric value. ";
@@ -27,10 +29,11 @@ bool check_cin()
 
         return false;
 }
+// end
 
-
+///////////////////////////////////////////////////////////////////////////
 // I created an-not-usefull menu to Quit,  when rigth click
-//
+
 void menu (int num)
 {
     if (!num)
@@ -53,9 +56,12 @@ void createMenu(void)
     glutAddMenuEntry("Quit " PROJECT_NAME, 0);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
-//
-// End of the menu
 
+// End of the menu
+////////////////////////////////////////////////////////////////////////////
+
+
+////////////////////////////////////////////////////////////////////////////
 // Program's implementation
 Program::Program ( int argc, char** argv )
 {
@@ -175,3 +181,4 @@ void Program::handleArguments(struct XYZ &PointOnAxis, struct SizeOptions &Numer
         << e.argId() << endl;
     }
 }
+// end of Program::xxx

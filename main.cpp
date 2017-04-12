@@ -75,7 +75,7 @@ int main ( int argc, char** argv )
 
     for ( int i = 0; i < snake_num; i++ )
     {
-        if ( ! ( NumericArgs.snakeSize ) )
+        if ( ! ( snakeSize ) )
         {
             while ( ( cout << "Snake's # " << i + 1 << "size: " ) &&
                     ( !cin >> snake_array[i].size ) )
