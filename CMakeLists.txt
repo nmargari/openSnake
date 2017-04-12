@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(openSnake)
 
-set (openSnake_VERSION_MAJOR 0)
-set (openSnake_VERSION_MINOR 1)
-set (openSnake_VERSION_PATCH 0)
+set (openSnake_VERSION 0.1.0)
+#set (openSnake_VERSION_MAJOR 0)
+#set (openSnake_VERSION_MINOR 1)
+#set (openSnake_VERSION_PATCH 0)
 
 # configure a header file to pass some of the CMake settings
 # to the source code

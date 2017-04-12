@@ -4,6 +4,7 @@
 
 void print_usage();
 void print_version();
+std::string get_version();
 void check_cin();
 void proccess_flags_status(bool gflag, bool nflag, bool sflag);
 void print_about();

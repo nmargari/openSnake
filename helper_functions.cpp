@@ -24,12 +24,14 @@ void print_usage()
     cout << endl;
 }
 
-void print_version()
+string get_version()
 {
-    cout << "You are running " << PROJECT_NAME << " v"
-         << openSnake_VERSION_MAJOR << "."
-         << openSnake_VERSION_MINOR << "."
-         << openSnake_VERSION_PATCH << endl;
+    string majorStr = to_string(openSnake_VERSION_MAJOR);
+    string minorStr = to_string(openSnake_VERSION_MINOR);
+    string patchStr = to_string(openSnake_VERSION_PATCH);
+
+    string version = majorStr + "." + minorStr + "." + patchStr;
+    return version;
 }
 
 void check_cin()
@@ -39,37 +41,10 @@ void check_cin()
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-// TODO Not the most elegant solution to warn if an option
-// is missing. Must rethink this check.
-void proccess_flags_status(bool gflag, bool nflag, bool sflag)
-{
-    if (!gflag)
-    {
-        cerr << "-g is needed!\n";
-    }
-
-    if (!nflag)
-    {
-        cerr << "-n is needed!\n";
-    }
-
-    if (!sflag)
-    {
-        cerr << "-s is needed!\n";
-    }
-
-}
-
 void print_about(){
     char msg[] = "Credits to Nikos Margaritis\nnick.margas@gmail.com, https://github.com/nmargari/ \n";
     cout << msg << endl;
 
-}
-
-// TODO Manual for the game
-void print_man(){
-    char msg_usage[] = "manual..\n";
-    cout << msg_usage;
 }
 
 void menu (int num){
