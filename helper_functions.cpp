@@ -41,33 +41,31 @@ void check_cin()
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-void print_about(){
+void print_about()
+{
     char msg[] = "Credits to Nikos Margaritis\nnick.margas@gmail.com, https://github.com/nmargari/ \n";
     cout << msg << endl;
 
 }
 
-void menu (int num){
+void menu (int num)
+{
     if (!num){
         glutDestroyWindow(window);
         exit(EXIT_SUCCESS);
-    }else {
+    }else
+    {
         value = num;
     }
     glutPostRedisplay();
 }
 
-void createMenu(void){
+void createMenu(void)
+{
     submenu_id = glutCreateMenu(menu);
     menu_id = glutCreateMenu(menu);
 
     glutAddMenuEntry("Quit " PROJECT_NAME, 0);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
 }
-
-
-
-
-
-
 

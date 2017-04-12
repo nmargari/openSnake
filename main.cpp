@@ -13,10 +13,10 @@
 #include "helper_functions.h"
 #include "openSnakeConfig.h"
 
-int grid_size { -1};
-int snake_num { -1};
+int grid_size {-1};
+int snake_num {-1};
 // TODO Double check what *snake_size does and if snakeSize is not needed!
-int snakeSize { -1};
+int snakeSize {-1};
 int* snake_size;
 int** snake_position;
 int*** grid;
@@ -28,7 +28,8 @@ sphere hugeSphere;
 
 using namespace std;
 
-int main ( int argc, char** argv ) {
+int main ( int argc, char** argv )
+{
     coord* coordinates;
     int x { -1}, y { -1}, z { -1};
 
@@ -67,7 +68,8 @@ int main ( int argc, char** argv ) {
 
     // Either the user didn't provide a valid number or
     // the user provided 0
-    if ( grid_size <= 0 || snake_num <= 0 || snakeSize <= 0 ) {
+    if ( grid_size <= 0 || snake_num <= 0 || snakeSize <= 0 )
+    {
         print_usage();
         cerr << "\nMake sure you didn't give a zero value";
         exit ( EXIT_FAILURE );
@@ -94,25 +96,33 @@ int main ( int argc, char** argv ) {
 
     	}*/
 
-    for ( int i = 0; i < snake_num; i++ ) {
-        if ( ! ( snakeSize ) ) {
+    for ( int i = 0; i < snake_num; i++ )
+    {
+        if ( ! ( snakeSize ) )
+        {
             while ( ( cout << "Snake's # " << i + 1 << "size: " ) &&
-                    ( !cin >> snake_array[i].size ) ) {
+                    ( !cin >> snake_array[i].size ) )
+            {
                 check_cin();
             }
-        } else {
+        }
+        else
+        {
             // Append the command line argument
             snake_array[i].size = snakeSize;
         }
 
     }
 
-    for ( int i = 0; i < snake_num; i++ ) {
+    for ( int i = 0; i < snake_num; i++ )
+    {
         coordinates = new coord [2 * snake_array[i].size - 1];
 
-        if ( ( x < 0 ) || ( y < 0 ) || ( z < 0 ) ) {
+        if ( ( x < 0 ) || ( y < 0 ) || ( z < 0 ) )
+        {
             while ( ( cout << "Position for snake #" << i + 1 << "(x,y,z): " ) &&
-                    ! ( cin >> x >> y >> z ) ) {
+                    ! ( cin >> x >> y >> z ) )
+            {
                 check_cin();
             }
         }
