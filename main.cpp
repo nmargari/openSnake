@@ -34,8 +34,12 @@ int main ( int argc, char** argv )
     int x { -1}, y { -1}, z { -1};
 
     try {
+        Program thisProject;
 
-        TCLAP::CmdLine cmd ( "", ' ', get_version() );
+        // Just a demonstration
+        cout << thisProject.getVersionMsg() << endl;
+
+        TCLAP::CmdLine cmd("", ' ', thisProject.getVersionStr());
 
         TCLAP::ValueArg<int> gridSizeArg ( "g", "grid-size", "Size of the grid", true, 0, "int" );
         cmd.add ( gridSizeArg );
@@ -61,7 +65,10 @@ int main ( int argc, char** argv )
         // If the user gave -a, then print about info
         if (aboutArg.getValue()){ print_about(); }
 
-    } catch ( TCLAP::ArgException& e ) {
+
+    }
+    catch ( TCLAP::ArgException& e )
+    {
         cerr << "Error : " << e.error() << " for arg "
              << e.argId() << endl;
     }
@@ -70,7 +77,7 @@ int main ( int argc, char** argv )
     // the user provided 0
     if ( grid_size <= 0 || snake_num <= 0 || snakeSize <= 0 )
     {
-        print_usage();
+        //print_usage();
         cerr << "\nMake sure you didn't give a zero value";
         exit ( EXIT_FAILURE );
     }
@@ -152,4 +159,3 @@ int main ( int argc, char** argv )
 
     return 0;
 }
-

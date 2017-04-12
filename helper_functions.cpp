@@ -4,12 +4,9 @@
 #include "helper_functions.h"
 #include <limits>
 #include <GL/glut.h>
+#include <string>
 
 using namespace std;
-
-// TODO -v (version) is a good idea, but cmake should configure version
-// at compile time, from one variable inside of CMakeLists.txt, instead
-// of a variable here. Will check this later.
 
 void print_usage()
 {
@@ -24,7 +21,7 @@ void print_usage()
     cout << endl;
 }
 
-string get_version()
+/*string get_version()
 {
     string majorStr = to_string(openSnake_VERSION_MAJOR);
     string minorStr = to_string(openSnake_VERSION_MINOR);
@@ -32,7 +29,7 @@ string get_version()
 
     string version = majorStr + "." + minorStr + "." + patchStr;
     return version;
-}
+}*/
 
 void check_cin()
 {
@@ -67,5 +64,34 @@ void createMenu(void)
 
     glutAddMenuEntry("Quit " PROJECT_NAME, 0);
     glutAttachMenu(GLUT_RIGHT_BUTTON);
+}
+
+Program::Program()
+{
+    m_name = PROJECT_NAME;
+    m_version = openSnake_VERSION;
+    m_author = AUTHOR_INFO;
+}
+
+
+std::string Program::getVersionStr()
+{
+    return m_version;
+}
+
+std::string Program::getName()
+{
+    return m_name;
+}
+
+std::string Program::authorInfo()
+{
+    return m_author;
+}
+
+std::string Program::getVersionMsg()
+{
+    string version_message{"You are using " + m_name + ", version " + m_version };
+    return version_message;
 }
 

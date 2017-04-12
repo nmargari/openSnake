@@ -17,3 +17,18 @@ static int value {0};
 
 void menu ( int num );
 void createMenu ( void );
+
+class Program{
+
+private:
+    std::string m_name;
+    std::string m_version;
+    std::string m_author;
+
+public:
+    Program();
+    std::string getName();
+    std::string getVersionStr();
+    std::string authorInfo();
+    std::string getVersionMsg();
+};
