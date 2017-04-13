@@ -28,9 +28,9 @@ typedef struct SizeOptions{
   } SizeOptions;
 
 typedef struct ArgumentStatus{
-    bool grid_Sizez_Arg_isSet = false;
-    bool num_Snakes_Arg_isSet = false;
-    bool snake_Size_Arg_isSet = false;
+    bool grid_Size_Arg_isSet = false;
+    bool num_Snake_Arg_isSet = false;
+    bool snke_Size_Arg_isSet = false;
   } ArgumentStatus;
 
 

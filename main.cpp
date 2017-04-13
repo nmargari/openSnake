@@ -62,11 +62,11 @@ int main ( int argc, char** argv )
 
     	}*/
 
-    // TODO In these fors, instead we can check ArgStatus.snake_Size_Arg_isSet and if FALSE,
+    // TODO In these fors, we can check ArgStatus.snake_Size_Arg_isSet and if FALSE,
     // we can create an openGL dialog (or slider) to append our snake(s) the size etc. Rather
     // than reading form cmd line the size, a dialog could do the job. This way we will avoid
-    // the situation in which the game is run from menu, *command line* args will be missing
-    // and cin won't be able to cut it!!
+    // the situation in which the game is run from menu, (by definition)*command line* args will
+    // be missing and cin won't be able to cut it!!
 
     for ( int i = 0; i < snake_num; i++ )
     {

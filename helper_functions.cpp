@@ -96,7 +96,7 @@ ArgumentStatus Program::handleArguments(XYZ& PointOnAxis, SizeOptions& NumericAr
                 TCLAP::StdOutput out;
                 out.failure(cmd, exc);
             }
-            ArgStatus.grid_Sizez_Arg_isSet = true;
+            ArgStatus.grid_Size_Arg_isSet = true;
         }
 
 
@@ -118,7 +118,7 @@ ArgumentStatus Program::handleArguments(XYZ& PointOnAxis, SizeOptions& NumericAr
                 TCLAP::StdOutput out;
                 out.failure(cmd, exc);
             }
-            ArgStatus.num_Snakes_Arg_isSet = true;
+            ArgStatus.num_Snake_Arg_isSet = true;
         }
 
         // End of -n checks
@@ -148,7 +148,7 @@ ArgumentStatus Program::handleArguments(XYZ& PointOnAxis, SizeOptions& NumericAr
                 TCLAP::StdOutput out;
                 out.failure(cmd, exc);
             }
-            ArgStatus.snake_Size_Arg_isSet = true;
+            ArgStatus.snke_Size_Arg_isSet = true;
         }
 
         // End of -s checks
