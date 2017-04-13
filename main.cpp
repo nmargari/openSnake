@@ -45,7 +45,6 @@ int main ( int argc, char** argv )
     // struct members can be succesfully used.
     //////////////////////////////////
 
-
     //snake_array = new snake [snake_num];
     snake_array = new snake[NumericArgs.snake_num];
 
