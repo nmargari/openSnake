@@ -2,6 +2,7 @@
 #include <iostream>
 #include "openSnakeConfig.h"
 #include "helper_functions.h"
+#include "defines.h"
 #include <limits>
 #include <GL/glut.h>
 #include <string>
@@ -193,5 +194,4 @@ void createMenu()
 
 // End of the menu
 ////////////////////////////////////////////////////////////////////////////
-
 

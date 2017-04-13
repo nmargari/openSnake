@@ -37,7 +37,7 @@ private:
     char** m_argv;
 
 public:
-    Program(int argc, char** argv);
+    Program ( int argc, char** argv );
     std::string getName();
     std::string getVersionStr();
     std::string authorInfo();

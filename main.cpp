@@ -24,29 +24,30 @@ using namespace std;
 int main ( int argc, char** argv )
 {
     coord* coordinates;
-    int x, y, z;
+    Program thisProject{argc, argv};
 
     XYZ PointOnAxis;
     SizeOptions NumericArgs;
-
-    Program thisProject{argc, argv};
 
     thisProject.handleArguments(PointOnAxis, NumericArgs);
 
     // TODO
     // These variables may not be needed
+    /*int x, y, z;
     x = PointOnAxis.x;
     y = PointOnAxis.y;
-    z = PointOnAxis.z;
+    z = PointOnAxis.z;*/
+    // struct members can be succesfully used in main
 
+
+    // These variables are global, meaning they should appended a value
+    // and go on with their use, while struct just fufiled it's purpose;
+    // it passed variables from handleArguments, clean and tidy
     grid_size = NumericArgs.grid_size;
     snake_num = NumericArgs.snake_num;
     snakeSize = NumericArgs.snakeSize;
-    // struct members can be succesfully used.
-    //////////////////////////////////
 
-    //snake_array = new snake [snake_num];
-    snake_array = new snake[NumericArgs.snake_num];
+    snake_array = new snake [snake_num];
 
     //grid_table = new int ** [grid_size];
 
@@ -67,11 +68,9 @@ int main ( int argc, char** argv )
 
     	}*/
 
-    //for ( int i = 0; i < snake_num; i++ )
-    for ( int i = 0; i < NumericArgs.snake_num; i++ )
+    for ( int i = 0; i < snake_num; i++ )
     {
-        //if ( ! ( snakeSize ) )
-        if ( ! ( NumericArgs.snakeSize ) )
+        if ( ! ( snakeSize ) )
         {
             while ( ( cout << "Snake's # " << i + 1 << "size: " ) &&
                     ( !cin >> snake_array[i].size ) )
@@ -86,21 +85,18 @@ int main ( int argc, char** argv )
         else
         {
             // Append the command line argument
-            //snake_array[i].size = snakeSize;
-            snake_array[i].size = NumericArgs.snakeSize;
+            snake_array[i].size = snakeSize;
         }
 
     }
 
-    //for ( int i = 0; i < snake_num; i++ )
-    for ( int i = 0; i < NumericArgs.snake_num; i++ )
+    for ( int i = 0; i < snake_num; i++ )
     {
         coordinates = new coord [2 * snake_array[i].size - 1];
 
         if ( !PointOnAxis.is_set )
         {
             while (cout << "Position for snake #" << i + 1 << "(x,y,z): " &&
-                    //!(cin >> x >> y >> z))
                 !(cin >> PointOnAxis.x >> PointOnAxis.y >> PointOnAxis.z))
                     {
                         if (!check_cin())
@@ -110,7 +106,6 @@ int main ( int argc, char** argv )
                         }
                     }
         }
-        //snake_array[i].set_coordinates( x, y, z);
         snake_array[i].set_coordinates( PointOnAxis.x, PointOnAxis.y, PointOnAxis.z);
     }
 
