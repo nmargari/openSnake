@@ -24,18 +24,17 @@ using namespace std;
 int main ( int argc, char** argv )
 {
     coord* coordinates;
-    struct XYZ PointOnAxis;
-    struct SizeOptions NumericArgs;
+    int x, y, z;
 
-
-    // Magic number :( . Abnormal initial value. This will fail if the
-    // user indeed wants the snake to start from (-999, -999, -999)!
-    int x {-999}, y {-999}, z {-999};
+    XYZ PointOnAxis;
+    SizeOptions NumericArgs;
 
     Program thisProject{argc, argv};
 
     thisProject.handleArguments(PointOnAxis, NumericArgs);
 
+    // TODO
+    // These variables may not be needed
     x = PointOnAxis.x;
     y = PointOnAxis.y;
     z = PointOnAxis.z;
@@ -43,16 +42,12 @@ int main ( int argc, char** argv )
     grid_size = NumericArgs.grid_size;
     snake_num = NumericArgs.snake_num;
     snakeSize = NumericArgs.snakeSize;
+    // struct members can be succesfully used.
+    //////////////////////////////////
 
-    // Either the user didn't provide a valid number or
-    // the user provided 0
-    /*if ( grid_size <= 0 || snake_num <= 0 || snakeSize <= 0 )
-    {
-        cerr << "\nMake sure you didn't give a zero value";
-        exit ( EXIT_FAILURE );
-    }*/
 
-    snake_array = new snake [snake_num];
+    //snake_array = new snake [snake_num];
+    snake_array = new snake[NumericArgs.snake_num];
 
     //grid_table = new int ** [grid_size];
 
@@ -73,38 +68,51 @@ int main ( int argc, char** argv )
 
     	}*/
 
-    for ( int i = 0; i < snake_num; i++ )
+    //for ( int i = 0; i < snake_num; i++ )
+    for ( int i = 0; i < NumericArgs.snake_num; i++ )
     {
-        if ( ! ( snakeSize ) )
+        //if ( ! ( snakeSize ) )
+        if ( ! ( NumericArgs.snakeSize ) )
         {
             while ( ( cout << "Snake's # " << i + 1 << "size: " ) &&
                     ( !cin >> snake_array[i].size ) )
             {
-                check_cin();
+                if (!check_cin())
+                {
+                    cerr << "Something horrible happend with the input stream\n";
+                    exit(EXIT_FAILURE);
+                }
             }
         }
         else
         {
             // Append the command line argument
-            snake_array[i].size = snakeSize;
+            //snake_array[i].size = snakeSize;
+            snake_array[i].size = NumericArgs.snakeSize;
         }
 
     }
 
-    for ( int i = 0; i < snake_num; i++ )
+    //for ( int i = 0; i < snake_num; i++ )
+    for ( int i = 0; i < NumericArgs.snake_num; i++ )
     {
         coordinates = new coord [2 * snake_array[i].size - 1];
 
         if ( !PointOnAxis.is_set )
         {
             while (cout << "Position for snake #" << i + 1 << "(x,y,z): " &&
-                    !(cin >> x >> y >> z))
+                    //!(cin >> x >> y >> z))
+                !(cin >> PointOnAxis.x >> PointOnAxis.y >> PointOnAxis.z))
                     {
-                        check_cin();
+                        if (!check_cin())
+                        {
+                            cerr << "Something horrible happend with the input stream\n";
+                            exit(EXIT_FAILURE);
+                        }
                     }
         }
-
-        snake_array[i].set_coordinates ( x, y, z );
+        //snake_array[i].set_coordinates( x, y, z);
+        snake_array[i].set_coordinates( PointOnAxis.x, PointOnAxis.y, PointOnAxis.z);
     }
 
     glutInit ( &argc, argv );

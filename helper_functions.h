@@ -8,36 +8,24 @@
 #endif
 #include <tclap/CmdLine.h>
 
-/*TODO OBSOLOTE,  delete?
-void print_usage();
-void print_version();
-std::string get_version();
-void proccess_flags_status ( bool gflag, bool nflag, bool sflag );
-void print_about();
-void print_man();*/
-
-bool check_cin();
-
 static int window;
 static int menu_id;
 static int submenu_id;
 static int value {0};
 
-void menu ( int num );
-void createMenu ( void );
 
-struct XYZ{
+typedef struct XYZ{
     int x = -1;
     int y = -1;
     int z = -1;
     bool is_set = false;
-  };
+  } XYZ;
 
-struct SizeOptions{
+typedef struct SizeOptions{
     int grid_size = 0;
     int snake_num = 0;
     int snakeSize = 0;
-  };
+  } SizeOptions;
 
 class Program{
 
@@ -54,6 +42,9 @@ public:
     std::string getVersionStr();
     std::string authorInfo();
     std::string getVersionMsg();
-    void handleArguments (struct XYZ &PointOnAxis, struct SizeOptions &NumericArgs);
+    void handleArguments (XYZ& PointOnAxis, SizeOptions& NumericArgs);
 };
 
+void menu ( int num );
+void createMenu ();
+bool check_cin();
