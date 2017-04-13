@@ -27,6 +27,13 @@ typedef struct SizeOptions{
     int snakeSize = 0;
   } SizeOptions;
 
+typedef struct ArgumentStatus{
+    bool grid_Sizez_Arg_isSet = false;
+    bool num_Snakes_Arg_isSet = false;
+    bool snake_Size_Arg_isSet = false;
+  } ArgumentStatus;
+
+
 class Program{
 
 private:
@@ -42,7 +49,7 @@ public:
     std::string getVersionStr();
     std::string authorInfo();
     std::string getVersionMsg();
-    void handleArguments (XYZ& PointOnAxis, SizeOptions& NumericArgs);
+    ArgumentStatus handleArguments ( XYZ& PointOnAxis, SizeOptions& NumericArgs );
 };
 
 void menu ( int num );

@@ -24,20 +24,14 @@ using namespace std;
 int main ( int argc, char** argv )
 {
     coord* coordinates;
-    Program thisProject{argc, argv};
+    Program project{argc, argv};
 
-    XYZ PointOnAxis;
-    SizeOptions NumericArgs;
 
-    thisProject.handleArguments(PointOnAxis, NumericArgs);
+    XYZ PointOnAxis;                                        // Stores x, y, z
+    SizeOptions NumericArgs;                                // Stores every numeric argument
+    ArgumentStatus ArgStatus;                               // Stores booleans for numerics arguments
 
-    // TODO
-    // These variables may not be needed
-    /*int x, y, z;
-    x = PointOnAxis.x;
-    y = PointOnAxis.y;
-    z = PointOnAxis.z;*/
-    // struct members can be succesfully used in main
+    ArgStatus = project.handleArguments(PointOnAxis, NumericArgs);
 
 
     // These variables are global, meaning they should appended a value
@@ -67,6 +61,12 @@ int main ( int argc, char** argv )
     		}
 
     	}*/
+
+    // TODO In these fors, instead we can check ArgStatus.snake_Size_Arg_isSet and if FALSE,
+    // we can create an openGL dialog (or slider) to append our snake(s) the size etc. Rather
+    // than reading form cmd line the size, a dialog could do the job. This way we will avoid
+    // the situation in which the game is run from menu, *command line* args will be missing
+    // and cin won't be able to cut it!!
 
     for ( int i = 0; i < snake_num; i++ )
     {
@@ -113,7 +113,7 @@ int main ( int argc, char** argv )
     glutInitDisplayMode ( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
     glutInitWindowSize ( WIN_X_SIZE, WIN_Y_SIZE );
     window = glutCreateWindow ( "Open Snake" );
-    //glutCreateWindow(thisProject.getName());                    // Use this to automatically set the title
+    //glutCreateWindow(project.getName());                    // Use this to automatically set the title
     createMenu();
 
     init ();

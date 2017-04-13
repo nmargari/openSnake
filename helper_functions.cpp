@@ -48,20 +48,22 @@ std::string Program::getVersionMsg()
     return ("You are using " + m_name + ", version " + m_version);
 }
 
-void Program::handleArguments(XYZ& PointOnAxis, SizeOptions& NumericArgs)
+ArgumentStatus Program::handleArguments(XYZ& PointOnAxis, SizeOptions& NumericArgs)
 {
-    try {
+    ArgumentStatus ArgStatus;                               // Create ArgStatus to hold booleans isSet
+
+    try {                                                   // Handle exceptions for tclap to process them
 
         // ' ' is the delimeter (space). We can use '=' eg -n=1 -g=50 etc...
         TCLAP::CmdLine cmd("3D Snake game", ' ', this->getVersionStr());
 
-        TCLAP::ValueArg<int> gridSizeArg ( "g", "grid-size", "Size of the grid", true, 0, "int" );
+        TCLAP::ValueArg<int> gridSizeArg ( "g", "grid-size", "Size of the grid", false, 50, "int" );
         cmd.add ( gridSizeArg );
 
-        TCLAP::ValueArg<int> numSnkArg ( "n", "number-snakes", "Number of snakes to create", true, 0, "int" );
+        TCLAP::ValueArg<int> numSnkArg ( "n", "number-snakes", "Number of snakes to create", false, 1, "int" );
         cmd.add ( numSnkArg );
 
-        TCLAP::ValueArg<int> sizeSnkArg ( "s", "snake-size", "Size of the snake(s)", true, 0, "int" );
+        TCLAP::ValueArg<int> sizeSnkArg ( "s", "snake-size", "Size of the snake(s)", false, 0, "int" );
         cmd.add ( sizeSnkArg );
 
         TCLAP::SwitchArg coordSnkArg ( "c", "coordinates", "Set coordinates to 0", cmd, false );
@@ -69,53 +71,88 @@ void Program::handleArguments(XYZ& PointOnAxis, SizeOptions& NumericArgs)
 
         cmd.parse ( this->m_argc, this->m_argv );
 
+        //////////////////////////////////////////////////////////////
+        // This block of code checks if it's value is the proper
         // Check whether these args are zero or negative!!
-        // When grid size is smaller that 35 a black window is created
-        if (gridSizeArg.getValue() > 0 && gridSizeArg.getValue() < 35)
-        {
-            TCLAP::ArgException exc("Small (under 35) grid_size!",
-                "--grid_size",
-                "Small grid size ArgException");
+        // When grid size is smaller that 35 a black window is created!
 
-            TCLAP::StdOutput out;
-            out.failure(cmd, exc);
-        }
-        else if (gridSizeArg.getValue() <= 0)
+        if (gridSizeArg.isSet())
         {
-            TCLAP::ArgException exc("Negative or zero grid_size!",
-                "--grid_size",
-                "Negative or zero grid size ArgException");
+            if (gridSizeArg.getValue() > 0 && gridSizeArg.getValue() < 35)
+            {
+                TCLAP::ArgException exc("Small (under 35) grid_size!",
+                    "--grid_size",
+                    "Small grid size ArgException");
 
-            TCLAP::StdOutput out;
-            out.failure(cmd, exc);
-        }
+                TCLAP::StdOutput out;
+                out.failure(cmd, exc);
+            }
+            else if (gridSizeArg.getValue() <= 0)
+            {
+                TCLAP::ArgException exc("Negative or zero grid_size!",
+                    "--grid_size",
+                    "Negative or zero grid size ArgException");
 
-        if (numSnkArg.getValue() <= 0)
-        {
-            TCLAP::ArgException exc("Zero or negative number of snakes!",
-                "--number-snakes",
-                "Negative or zero ArgException");
-            TCLAP::StdOutput out;
-            out.failure(cmd, exc);
+                TCLAP::StdOutput out;
+                out.failure(cmd, exc);
+            }
+            ArgStatus.grid_Sizez_Arg_isSet = true;
         }
 
+
+        // End of -g checks
+        ///////////////////////////////////////////////////////////
+
+
+        //////////////////////////////////////////////////////////////
+        // This block of code checks if it's value is the proper
+        // is the proper.
+
+        if (numSnkArg.isSet())
+        {
+            if (numSnkArg.getValue() <= 0)
+            {
+                TCLAP::ArgException exc("Zero or negative number of snakes!",
+                    "--number-snakes",
+                    "Negative or zero ArgException");
+                TCLAP::StdOutput out;
+                out.failure(cmd, exc);
+            }
+            ArgStatus.num_Snakes_Arg_isSet = true;
+        }
+
+        // End of -n checks
+        ///////////////////////////////////////////////////////////
+
+
+        //////////////////////////////////////////////////////////////
+        // This block of code checks if it's value is the proper
+        //  is the proper.
         // If the snake's size is near 20 the snake's size becomes = 1
-        if (sizeSnkArg.getValue() > 16)
+
+        if (sizeSnkArg.isSet())
         {
-            TCLAP::ArgException exc("Way too big size of snakes!",
-                "--snake-size",
-                "Big snake size ArgException");
-            TCLAP::StdOutput out;
-            out.failure(cmd, exc);
+            if (sizeSnkArg.getValue() > 16)
+            {
+                TCLAP::ArgException exc("Way too big size of snakes!",
+                    "--snake-size",
+                    "Big snake size ArgException");
+                TCLAP::StdOutput out;
+                out.failure(cmd, exc);
+            }
+            else if (sizeSnkArg.getValue() <= 0)
+            {
+                TCLAP::ArgException exc("Zero or negative size of snakes!",
+                    "--snake-size",
+                    "Negative or zero ArgException");
+                TCLAP::StdOutput out;
+                out.failure(cmd, exc);
+            }
+            ArgStatus.snake_Size_Arg_isSet = true;
         }
-        else if (sizeSnkArg.getValue() <= 0)
-        {
-            TCLAP::ArgException exc("Zero or negative size of snakes!",
-                "--snake-size",
-                "Negative or zero ArgException");
-            TCLAP::StdOutput out;
-            out.failure(cmd, exc);
-        }
+
+        // End of -s checks
+        ///////////////////////////////////////////////////////////
 
         // Νο exception arrised, good to go!!
         NumericArgs.grid_size = gridSizeArg.getValue();
@@ -144,6 +181,9 @@ void Program::handleArguments(XYZ& PointOnAxis, SizeOptions& NumericArgs)
         cerr << "Error : " << e.error() << " for arg "
         << e.argId() << endl;
     }
+
+    return ArgStatus;                                       // Finally return which flags are set!
+
 }
 // end of Program::xxx
 
