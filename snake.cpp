@@ -3,255 +3,294 @@
 
 using namespace std;
 
-
-bool collision_detection(snake *s)
+int snake::getSize()
 {
-	for(int i = 0; i < snake_num; i++)
-	{
-		if(snake_array + i == s)
-			continue;
-		for(int j = 0; j < 2*snake_array[i].size-1; j++)
-		{
-			if(snake_array[i].coordinates[j].x == s->coordinates[0].x && snake_array[i].coordinates[j].y == s->coordinates[0].y && snake_array[i].coordinates[j].z == s->coordinates[0].z)
-			{
-				return true;
-			}
-		}
-	}
+    return this->m_size;
+}
 
-	return false;
+coord * snake::getCoord()
+{
+    return this->m_coordinates;
+}
+
+void snake::setSize( int sz )
+{
+    this->m_size = sz;
+}
+
+void snake::setCoord( coord* coordin )
+{
+    this->m_coordinates = coordin;
 }
 
 
-void snake::set_coordinates(int x, int y, int z)
+bool collision_detection( snake *s )
 {
-	this->coordinates = new coord [2 * this->size - 1];
+    for ( int i = 0; i < snake_num; i++ )
+    {
+        if ( snake_array + i == s )
+            continue;
 
-	this->coordinates[0].x = x;
-	this->coordinates[0].y = y;
-	this->coordinates[0].z = z;
-	//grid_table[x + grid_size/2][y + grid_size/2][z + grid_size/2] = 1;
+        for ( int j = 0; j < 2 * snake_array[i].getSize() - 1; j++ )
+        {
+            if ( snake_array[i].getCoord()[j].x == s->getCoord()[0].x && snake_array[i].getCoord()[j].y == s->getCoord()[0].y && snake_array[i].getCoord()[j].z == s->getCoord()[0].z )
+            {
+                return true;
+            }
+        }
+    }
 
-	if(2 * this->size + this->coordinates[0].x - 1 <= grid_size/2.0)
-	{
-		for(int i = 1; i < 2 * this->size - 1; i++)
-		{
-			this->coordinates[i].x = this->coordinates[i - 1].x + 1;
-			this->coordinates[i].y = this->coordinates[0].y;
-			this->coordinates[i].z = this->coordinates[0].z;
-			//grid_table[(int)(this->coordinates[i - 1].x + grid_size/2 + 1)][(int)(this->coordinates[i].y + grid_size/2)][(int)(this->coordinates[i].z + grid_size/2)] = 1;
-		}
-	}
-	else if(2 * this->size + this->coordinates[0].y - 1 <= grid_size/2.0)
-	{
-		for(int i = 1; i < 2 * this->size - 1; i++)
-		{
-			this->coordinates[i].y = this->coordinates[i - 1].y + 1;
-			this->coordinates[i].x = this->coordinates[0].x;
-			this->coordinates[i].z = this->coordinates[0].z;
-			//grid_table[(int)(this->coordinates[i].x + grid_size/2)][(int)(this->coordinates[i - 1].y + grid_size/2 + 1)][(int)(this->coordinates[i].z + grid_size/2)] = 1;
-		}
-	}
-	else if(2 * this->size + this->coordinates[0].z - 1 <= grid_size/2.0)
-	{
-		for(int i = 1; i < 2 * this->size - 1; i++)
-		{
-			this->coordinates[i].z = this->coordinates[i - 1].z + 1;
-			this->coordinates[i].y = this->coordinates[0].y;
-			this->coordinates[i].x = this->coordinates[0].x;
-			//grid_table[(int)(this->coordinates[i].x + grid_size/2)][(int)(this->coordinates[i].y + grid_size/2)][(int)(this->coordinates[i - 1].z + grid_size/2 + 1)] = 1;
-		}
-	}
-	else if(-(2 * this->size + this->coordinates[0].x - 1) >= -grid_size/2.0)
-	{
-		for(int i = 1; i < 2 * this->size - 1; i++)
-		{
-			this->coordinates[i].x = this->coordinates[i - 1].x - 1;
-			this->coordinates[i].y = this->coordinates[0].y;
-			this->coordinates[i].z = this->coordinates[0].z;
-			//grid_table[(int)(this->coordinates[i - 1].x + grid_size/2 - 1)][(int)(this->coordinates[i].y + grid_size/2)][(int)(this->coordinates[i].z + grid_size/2)] = 1;
-		}
-	}
-	else if(-(2 * this->size + this->coordinates[0].y - 1) >= -grid_size/2.0)
-	{
-		for(int i = 1; i < 2 * this->size - 1; i++)
-		{
-			this->coordinates[i].y = this->coordinates[i - 1].y - 1;
-			this->coordinates[i].x = this->coordinates[0].x;
-			this->coordinates[i].z = this->coordinates[0].z;
-			//grid_table[(int)(this->coordinates[i].x + grid_size/2)][(int)(this->coordinates[i - 1].y + grid_size/2 - 1)][(int)(this->coordinates[i].z + grid_size/2)] = 1;
-		}
-	}
-	else if(-(2 * this->size + this->coordinates[0].z - 1) >= -grid_size/2.0)
-	{
-		for(int i = 1; i < 2 * this->size - 1; i++)
-		{
-			this->coordinates[i].z = this->coordinates[i - 1].z - 1;
-			this->coordinates[i].y = this->coordinates[0].y;
-			this->coordinates[i].x = this->coordinates[0].x;
-			//grid_table[(int)(this->coordinates[i].x + grid_size/2)][(int)(this->coordinates[i].y + grid_size/2)][(int)(this->coordinates[i - 1].z + grid_size/2 - 1)] = 1;
-		}
-	}
+    return false;
+}
+
+
+void snake::set_coordinates( int x, int y, int z )
+{
+    this->m_coordinates = new coord [2 * this->m_size - 1];
+
+    this->m_coordinates[0].x = x;
+    this->m_coordinates[0].y = y;
+    this->m_coordinates[0].z = z;
+    //grid_table[x + grid_size/2][y + grid_size/2][z + grid_size/2] = 1;
+
+    if ( 2 * this->m_size + this->m_coordinates[0].x - 1 <= grid_size / 2.0 )
+    {
+        for ( int i = 1; i < 2 * this->m_size - 1; i++ )
+        {
+            this->m_coordinates[i].x = this->m_coordinates[i - 1].x + 1;
+            this->m_coordinates[i].y = this->m_coordinates[0].y;
+            this->m_coordinates[i].z = this->m_coordinates[0].z;
+            //grid_table[(int)(this->coordinates[i - 1].x + grid_size/2 + 1)][(int)(this->coordinates[i].y + grid_size/2)][(int)(this->coordinates[i].z + grid_size/2)] = 1;
+        }
+    }
+    else if ( 2 * this->m_size + this->m_coordinates[0].y - 1 <= grid_size / 2.0 )
+    {
+        for ( int i = 1; i < 2 * this->m_size - 1; i++ )
+        {
+            this->m_coordinates[i].y = this->m_coordinates[i - 1].y + 1;
+            this->m_coordinates[i].x = this->m_coordinates[0].x;
+            this->m_coordinates[i].z = this->m_coordinates[0].z;
+            //grid_table[(int)(this->coordinates[i].x + grid_size/2)][(int)(this->coordinates[i - 1].y + grid_size/2 + 1)][(int)(this->coordinates[i].z + grid_size/2)] = 1;
+        }
+    }
+    else if ( 2 * this->m_size + this->m_coordinates[0].z - 1 <= grid_size / 2.0 )
+    {
+        for ( int i = 1; i < 2 * this->m_size - 1; i++ )
+        {
+            this->m_coordinates[i].z = this->m_coordinates[i - 1].z + 1;
+            this->m_coordinates[i].y = this->m_coordinates[0].y;
+            this->m_coordinates[i].x = this->m_coordinates[0].x;
+            //grid_table[(int)(this->coordinates[i].x + grid_size/2)][(int)(this->coordinates[i].y + grid_size/2)][(int)(this->coordinates[i - 1].z + grid_size/2 + 1)] = 1;
+        }
+    }
+    else if ( -( 2 * this->m_size + this->m_coordinates[0].x - 1 ) >= -grid_size / 2.0 )
+    {
+        for ( int i = 1; i < 2 * this->m_size - 1; i++ )
+        {
+            this->m_coordinates[i].x = this->m_coordinates[i - 1].x - 1;
+            this->m_coordinates[i].y = this->m_coordinates[0].y;
+            this->m_coordinates[i].z = this->m_coordinates[0].z;
+            //grid_table[(int)(this->coordinates[i - 1].x + grid_size/2 - 1)][(int)(this->coordinates[i].y + grid_size/2)][(int)(this->coordinates[i].z + grid_size/2)] = 1;
+        }
+    }
+    else if ( -( 2 * this->m_size + this->m_coordinates[0].y - 1 ) >= -grid_size / 2.0 )
+    {
+        for ( int i = 1; i < 2 * this->m_size - 1; i++ )
+        {
+            this->m_coordinates[i].y = this->m_coordinates[i - 1].y - 1;
+            this->m_coordinates[i].x = this->m_coordinates[0].x;
+            this->m_coordinates[i].z = this->m_coordinates[0].z;
+            //grid_table[(int)(this->coordinates[i].x + grid_size/2)][(int)(this->coordinates[i - 1].y + grid_size/2 - 1)][(int)(this->coordinates[i].z + grid_size/2)] = 1;
+        }
+    }
+    else if ( -( 2 * this->m_size + this->m_coordinates[0].z - 1 ) >= -grid_size / 2.0 )
+    {
+        for ( int i = 1; i < 2 * this->m_size - 1; i++ )
+        {
+            this->m_coordinates[i].z = this->m_coordinates[i - 1].z - 1;
+            this->m_coordinates[i].y = this->m_coordinates[0].y;
+            this->m_coordinates[i].x = this->m_coordinates[0].x;
+            //grid_table[(int)(this->coordinates[i].x + grid_size/2)][(int)(this->coordinates[i].y + grid_size/2)][(int)(this->coordinates[i - 1].z + grid_size/2 - 1)] = 1;
+        }
+    }
 }
 
 void snake::random_move()
 {
-	int x, y, z, random, k, l, m;
+    int x, y, z, random, k, l, m;
 
 
 
-	for(int i = 0; i < 2 * this->size - 1; i++)
-	{
-again:
-		random = randomNumber(0, 5);
+    for ( int i = 0; i < 2 * this->m_size - 1; i++ )
+    {
+    again:
+        random = randomNumber( 0, 5 );
 
-		if(i == 0)
-		{
+        if ( i == 0 )
+        {
 
-			x = this->coordinates[i].x;
-			y = this->coordinates[i].y;
-			z = this->coordinates[i].z;
+            x = this->m_coordinates[i].x;
+            y = this->m_coordinates[i].y;
+            z = this->m_coordinates[i].z;
 
-			if(y + 1 > grid_size/2.0 - 2.0 && y - 1 < -grid_size/2.0 + 2.0 && x + 1 > grid_size/2.0 - 2.0 && x - 1 < -grid_size/2.0 + 2.0 && z - 1 < -grid_size/2.0 + 2.0 && z + 1 > grid_size/2.0 - 2.0)
-			{
-				cerr << "A snake cant move" << endl;
-				return ;
-			}
-			switch(random)
-			{
-				case UP:
-				{
+            if ( y + 1 > grid_size / 2.0 - 2.0 && y - 1 < -grid_size / 2.0 + 2.0 && x + 1 > grid_size / 2.0 - 2.0 && x - 1 < -grid_size / 2.0 + 2.0 && z - 1 < -grid_size / 2.0 + 2.0 && z + 1 > grid_size / 2.0 - 2.0 )
+            {
+                cerr << "A snake can't move" << endl;
+                return ;
+            }
 
-					if(y + 1 > grid_size/2.0 - 2.0)
-						goto again;
-					for(int j = 0; j < 2*this->size-1; j++)
-					{
-						if(this->coordinates[i].y + 1 == this->coordinates[j].y)
-							goto again;
-					}
+            switch ( random )
+            {
+                case UP:
+                {
 
-					this->coordinates[i].y++;
+                    if ( y + 1 > grid_size / 2.0 - 2.0 )
+                        goto again;
 
-					if(collision_detection(this))
-					{
-						this->coordinates[i].y--;
-						goto again;
-					}
-					break;
-				}
-				case DOWN:
-				{
-					if(y - 1 < -grid_size/2.0 + 2.0)
-						goto again;
+                    for ( int j = 0; j < 2 * this->m_size - 1; j++ )
+                    {
+                        if ( this->m_coordinates[i].y + 1 == this->m_coordinates[j].y )
+                            goto again;
+                    }
 
-					for(int j = 0; j < 2*this->size-1; j++)
-					{
-						if(this->coordinates[i].y - 1 == this->coordinates[j].y)
-							goto again;
-					}
-					this->coordinates[i].y--;
+                    this->m_coordinates[i].y++;
 
-					if(collision_detection(this))
-					{
-						this->coordinates[i].y++;
-						goto again;
-					}
-					break;
-				}
-				case RIGHT:
-				{
-					if(x + 1 > grid_size/2.0 - 2.0)
-						goto again;
+                    if ( collision_detection( this ) )
+                    {
+                        this->m_coordinates[i].y--;
+                        goto again;
+                    }
 
-					for(int j = 0; j < 2*this->size-1; j++)
-					{
-						if(this->coordinates[i].x + 1 == this->coordinates[j].x)
-							goto again;
-					}
+                    break;
+                }
 
-					this->coordinates[i].x++;
+                case DOWN:
+                {
+                    if ( y - 1 < -grid_size / 2.0 + 2.0 )
+                        goto again;
 
-					if(collision_detection(this))
-					{
-						this->coordinates[i].x--;
-						goto again;
-					}
-					break;
-				}
-				case LEFT:
-				{
+                    for ( int j = 0; j < 2 * this->m_size - 1; j++ )
+                    {
+                        if ( this->m_coordinates[i].y - 1 == this->m_coordinates[j].y )
+                            goto again;
+                    }
 
-					if(x - 1 < -grid_size/2.0 + 2.0)
-						goto again;
+                    this->m_coordinates[i].y--;
 
-					for(int j = 0; j < 2*this->size-1; j++)
-					{
-						if(this->coordinates[i].x - 1 == this->coordinates[j].x)
-							goto again;
-					}
-					this->coordinates[i].x--;
+                    if ( collision_detection( this ) )
+                    {
+                        this->m_coordinates[i].y++;
+                        goto again;
+                    }
 
-					if(collision_detection(this))
-					{
-						this->coordinates[i].x++;
-						goto again;
-					}
-					break;
-				}
-				case IN:
-				{
-					if(z - 1 < -grid_size/2.0 + 2.0)
-						goto again;
+                    break;
+                }
 
-					for(int j = 0; j < 2*this->size-1; j++)
-					{
-						if(this->coordinates[i].z - 1 == this->coordinates[j].z)
-							goto again;
-					}
-					this->coordinates[i].z--;
+                case RIGHT:
+                {
+                    if ( x + 1 > grid_size / 2.0 - 2.0 )
+                        goto again;
 
-					if(collision_detection(this))
-					{
-						this->coordinates[i].z++;
-						goto again;
-					}
-					break;
-				}
-				case OUT:
-				{
-					if(z + 1 > grid_size/2.0 - 2.0)
-						goto again;
+                    for ( int j = 0; j < 2 * this->m_size - 1; j++ )
+                    {
+                        if ( this->m_coordinates[i].x + 1 == this->m_coordinates[j].x )
+                            goto again;
+                    }
 
-					for(int j = 0; j < 2*this->size-1; j++)
-					{
-						if(this->coordinates[i].z + 1 == this->coordinates[j].z)
-							goto again;
-					}
-					this->coordinates[i].z++;
-					if(collision_detection(this))
-					{
-						this->coordinates[i].z--;
-						goto again;
-					}
-					break;
-				}
-			}
-		}
-		else
-		{
-			k = this->coordinates[i].x;
-			l = this->coordinates[i].y;
-			m = this->coordinates[i].z;
+                    this->m_coordinates[i].x++;
 
-			this->coordinates[i].x = x;
-			this->coordinates[i].y = y;
-			this->coordinates[i].z = z;
+                    if ( collision_detection( this ) )
+                    {
+                        this->m_coordinates[i].x--;
+                        goto again;
+                    }
 
-			x = k;
-			y = l;
-			z = m;
-		}
-	}
+                    break;
+                }
+
+                case LEFT:
+                {
+
+                    if ( x - 1 < -grid_size / 2.0 + 2.0 )
+                        goto again;
+
+                    for ( int j = 0; j < 2 * this->m_size - 1; j++ )
+                    {
+                        if ( this->m_coordinates[i].x - 1 == this->m_coordinates[j].x )
+                            goto again;
+                    }
+
+                    this->m_coordinates[i].x--;
+
+                    if ( collision_detection( this ) )
+                    {
+                        this->m_coordinates[i].x++;
+                        goto again;
+                    }
+
+                    break;
+                }
+
+                case IN:
+                {
+                    if ( z - 1 < -grid_size / 2.0 + 2.0 )
+                        goto again;
+
+                    for ( int j = 0; j < 2 * this->m_size - 1; j++ )
+                    {
+                        if ( this->m_coordinates[i].z - 1 == this->m_coordinates[j].z )
+                            goto again;
+                    }
+
+                    this->m_coordinates[i].z--;
+
+                    if ( collision_detection( this ) )
+                    {
+                        this->m_coordinates[i].z++;
+                        goto again;
+                    }
+
+                    break;
+                }
+
+                case OUT:
+                {
+                    if ( z + 1 > grid_size / 2.0 - 2.0 )
+                        goto again;
+
+                    for ( int j = 0; j < 2 * this->m_size - 1; j++ )
+                    {
+                        if ( this->m_coordinates[i].z + 1 == this->m_coordinates[j].z )
+                            goto again;
+                    }
+
+                    this->m_coordinates[i].z++;
+
+                    if ( collision_detection( this ) )
+                    {
+                        this->m_coordinates[i].z--;
+                        goto again;
+                    }
+
+                    break;
+                }
+            }
+        }
+        else
+        {
+            k = this->m_coordinates[i].x;
+            l = this->m_coordinates[i].y;
+            m = this->m_coordinates[i].z;
+
+            this->m_coordinates[i].x = x;
+            this->m_coordinates[i].y = y;
+            this->m_coordinates[i].z = z;
+
+            x = k;
+            y = l;
+            z = m;
+        }
+    }
 }
 
 

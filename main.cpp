@@ -7,7 +7,7 @@
 #include "helper_functions.h"
 
 int grid_size {-1};
-int snake_num {-1};
+int snake_num = 1;
 // TODO Double check what *snake_size does and if snakeSize is not needed!
 int snakeSize {-1};
 int* snake_size;
@@ -16,7 +16,7 @@ int*** grid;
 int timer = 500;
 //int ***grid_table;
 
-snake* snake_array;
+snake* snake_array = nullptr;
 sphere hugeSphere;
 
 using namespace std;
@@ -40,6 +40,7 @@ int main ( int argc, char** argv )
     grid_size = NumericArgs.grid_size;
     snake_num = NumericArgs.snake_num;
     snakeSize = NumericArgs.snakeSize;
+
 
     snake_array = new snake [snake_num];
 
@@ -73,7 +74,7 @@ int main ( int argc, char** argv )
         if ( ! ( ArgStatus.snke_Size_Arg_isSet ) )
         {
             while ( ( cout << "Snake's # " << i + 1 << "size: " ) &&
-                    ( !cin >> snake_array[i].size ) )
+                    ( !cin >> snake_array[i].getSize() ) )
             {
                 if (!check_cin())
                 {
@@ -85,14 +86,14 @@ int main ( int argc, char** argv )
         else
         {
             // Append the command line argument
-            snake_array[i].size = snakeSize;
+            snake_array[i].setSize(snakeSize);
         }
 
     }
 
     for ( int i = 0; i < snake_num; i++ )
     {
-        coordinates = new coord [2 * snake_array[i].size - 1];
+        coordinates = new coord [2 * snake_array[i].getSize() - 1];
 
         if ( !ArgStatus.coordin_Arg_isSet )
         {

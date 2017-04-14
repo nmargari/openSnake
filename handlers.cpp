@@ -283,7 +283,7 @@ void createSphere(sphere *s)
 	}
 
 	glPushMatrix();
-	glTranslatef(s->position.x, s->position.y, s->position.z);
+	glTranslatef(s->getPosition().x, s->getPosition().y, s->getPosition().z);
 	glColor3f(1.0, 0.0, 0.0);
 	glutSolidSphere(1.0, 20, 20);
 	glPopMatrix();
@@ -394,11 +394,11 @@ void drawSnake()
 
 	for(int i = 0; i < snake_num; i++)
 	{
-		for(int j = 0; j < 2 * snake_array[i].size - 1; j++)
+		for(int j = 0; j < 2 * snake_array[i].getSize() - 1; j++)
 		{
-			x = snake_array[i].coordinates[j].x;
-			y = snake_array[i].coordinates[j].y;
-			z = snake_array[i].coordinates[j].z;
+			x = snake_array[i].getCoord()[j].x;
+			y = snake_array[i].getCoord()[j].y;
+			z = snake_array[i].getCoord()[j].z;
 
 			if(j == 0)
 			{

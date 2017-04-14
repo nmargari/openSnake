@@ -8,9 +8,22 @@ typedef struct coord
 
 class sphere
 {
+private:
+    coord m_position;
+    coord m_destination;
+
 public:
-	coord position;
-	coord destination;
+    sphere();
+    sphere(coord& pos, coord& dest) : m_position(pos), m_destination(dest){};
+
+    coord getPosition();
+    coord getDestination();
+
+    void setPosition(coord pos);
+    void setDestination(coord dest);
+
+    /*	coord position;
+	coord destination;*/
 
 	void setRandomCoord();
 	void move();
@@ -19,11 +32,23 @@ public:
 
 class snake
 {
+private:
+    int m_size;
+    coord* m_coordinates;
+
 public:
-	int size;
-	coord *coordinates;
+    snake();
+    snake(int sz, coord* coordin) : m_size(sz), m_coordinates(coordin){};
+
+    int getSize();
+    coord* getCoord();
+
+    void setSize(int sz);
+    void setCoord(coord* coordin);
+
+	/*int size;
+	coord *coordinates;*/
 
 	void set_coordinates(int x, int y, int z);
 	void random_move();
 };
-
