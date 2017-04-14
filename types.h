@@ -32,13 +32,14 @@ public:
 
 class snake
 {
-private:
+protected:
   int m_size;
   coord *m_coordinates;
 
 public:
     snake ();
     snake (int sz, coord * coordin);
+    virtual ~ snake ();
 
   int getSize ();
   coord *getCoord ();
@@ -50,5 +51,17 @@ public:
      coord *coordinates; */
 
   void set_coordinates (int x, int y, int z);
+  virtual void random_move ();
+
+};
+
+class CollitionDetector:public snake
+{
+public:
+  CollitionDetector ();
+  ~CollitionDetector ();
+
   void random_move ();
+  bool collision_detection (snake * s);
+
 };
