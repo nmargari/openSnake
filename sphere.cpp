@@ -6,6 +6,12 @@ bool i = true;
 
 using namespace std;
 
+
+// Constructors
+sphere::sphere() {};
+sphere::sphere ( coord& pos, coord& dest )  : m_position ( pos ), m_destination ( dest ) {};
+//
+
 coord sphere::getDestination()
 {
     return this->m_destination;
@@ -16,25 +22,25 @@ coord sphere::getPosition()
     return this->m_position;
 }
 
-void sphere::setDestination( coord dest )
+void sphere::setDestination ( coord dest )
 {
     this->m_destination = dest;
 }
 
-void sphere::setPosition( coord pos )
+void sphere::setPosition ( coord pos )
 {
     this->m_position = pos;
 }
 
 void sphere::setRandomCoord()
 {
-    this->m_position.x = randomNumber( -grid_size / 2 + 1, grid_size / 2 - 1 );
-    this->m_position.y = randomNumber( -grid_size / 2 + 1, grid_size / 2 - 1 );
-    this->m_position.z = randomNumber( -grid_size / 2 + 1, grid_size / 2 - 1 );
+    this->m_position.x = randomNumber ( -grid_size / 2 + 1, grid_size / 2 - 1 );
+    this->m_position.y = randomNumber ( -grid_size / 2 + 1, grid_size / 2 - 1 );
+    this->m_position.z = randomNumber ( -grid_size / 2 + 1, grid_size / 2 - 1 );
 
-    this->m_destination.x = randomNumber( -grid_size / 2 - 1, grid_size / 2 + 1 ) + 100;
-    this->m_destination.y = randomNumber( -grid_size / 2 - 1, grid_size / 2 + 1 ) + 100;
-    this->m_destination.z = randomNumber( -grid_size / 2 - 1, grid_size / 2 + 1 ) + 100;
+    this->m_destination.x = randomNumber ( -grid_size / 2 - 1, grid_size / 2 + 1 ) + 100;
+    this->m_destination.y = randomNumber ( -grid_size / 2 - 1, grid_size / 2 + 1 ) + 100;
+    this->m_destination.z = randomNumber ( -grid_size / 2 - 1, grid_size / 2 + 1 ) + 100;
 }
 
 void sphere::move()
@@ -43,9 +49,9 @@ void sphere::move()
 
     if ( i )
     {
-        xMove = abs( abs( this->m_destination.x ) - abs( this->m_position.x ) );
-        yMove = abs( abs( this->m_destination.y ) - abs( this->m_position.y ) );
-        zMove = abs( abs( this->m_destination.z ) - abs( this->m_position.z ) );
+        xMove = abs ( abs ( this->m_destination.x ) - abs ( this->m_position.x ) );
+        yMove = abs ( abs ( this->m_destination.y ) - abs ( this->m_position.y ) );
+        zMove = abs ( abs ( this->m_destination.z ) - abs ( this->m_position.z ) );
         i = false;
     }
 
@@ -66,28 +72,28 @@ void sphere::move()
 
             if ( this->m_destination.y - this->m_position.y >= 0 )
             {
-                this->m_position.y += ( float )yMove / xMove;
+                this->m_position.y += ( float ) yMove / xMove;
 
                 if ( this->m_destination.z - this->m_position.z >= 0 )
                 {
-                    this->m_position.z += ( float )zMove / xMove;
+                    this->m_position.z += ( float ) zMove / xMove;
                 }
                 else
                 {
-                    this->m_position.z -= ( float )zMove / xMove;
+                    this->m_position.z -= ( float ) zMove / xMove;
                 }
             }
             else
             {
-                this->m_position.y -= ( float )yMove / xMove;
+                this->m_position.y -= ( float ) yMove / xMove;
 
                 if ( this->m_destination.z - this->m_position.z >= 0 )
                 {
-                    this->m_position.z += ( float )zMove / xMove;
+                    this->m_position.z += ( float ) zMove / xMove;
                 }
                 else
                 {
-                    this->m_position.z -= ( float )zMove / xMove;
+                    this->m_position.z -= ( float ) zMove / xMove;
                 }
             }
         }
@@ -97,28 +103,28 @@ void sphere::move()
 
             if ( this->m_destination.y - this->m_position.y >= 0 )
             {
-                this->m_position.y += ( float )yMove / xMove;
+                this->m_position.y += ( float ) yMove / xMove;
 
                 if ( this->m_destination.z - this->m_position.z >= 0 )
                 {
-                    this->m_position.z += ( float )zMove / xMove;
+                    this->m_position.z += ( float ) zMove / xMove;
                 }
                 else
                 {
-                    this->m_position.z -= ( float )zMove / xMove;
+                    this->m_position.z -= ( float ) zMove / xMove;
                 }
             }
             else
             {
-                this->m_position.y -= ( float )yMove / xMove;
+                this->m_position.y -= ( float ) yMove / xMove;
 
                 if ( this->m_destination.z - this->m_position.z >= 0 )
                 {
-                    this->m_position.z += ( float )zMove / xMove;
+                    this->m_position.z += ( float ) zMove / xMove;
                 }
                 else
                 {
-                    this->m_position.z -= ( float )zMove / xMove;
+                    this->m_position.z -= ( float ) zMove / xMove;
                 }
             }
         }
@@ -128,7 +134,7 @@ void sphere::move()
     {
         if ( this->m_destination.x - this->m_position.x >= 0 )
         {
-            this->m_position.x += ( float )xMove / yMove;
+            this->m_position.x += ( float ) xMove / yMove;
 
             if ( this->m_destination.y - this->m_position.y >= 0 )
             {
@@ -136,11 +142,11 @@ void sphere::move()
 
                 if ( this->m_destination.z - this->m_position.z >= 0 )
                 {
-                    this->m_position.z += ( float )zMove / yMove;
+                    this->m_position.z += ( float ) zMove / yMove;
                 }
                 else
                 {
-                    this->m_position.z -= ( float )zMove / yMove;
+                    this->m_position.z -= ( float ) zMove / yMove;
                 }
             }
             else
@@ -149,17 +155,17 @@ void sphere::move()
 
                 if ( this->m_destination.z - this->m_position.z >= 0 )
                 {
-                    this->m_position.z += ( float )zMove / yMove;
+                    this->m_position.z += ( float ) zMove / yMove;
                 }
                 else
                 {
-                    this->m_position.z -= ( float )zMove / yMove;
+                    this->m_position.z -= ( float ) zMove / yMove;
                 }
             }
         }
         else
         {
-            this->m_position.x -= ( float )xMove / yMove;
+            this->m_position.x -= ( float ) xMove / yMove;
 
             if ( this->m_destination.y - this->m_position.y >= 0 )
             {
@@ -167,11 +173,11 @@ void sphere::move()
 
                 if ( this->m_destination.z - this->m_position.z >= 0 )
                 {
-                    this->m_position.z += ( float )zMove / yMove;
+                    this->m_position.z += ( float ) zMove / yMove;
                 }
                 else
                 {
-                    this->m_position.z -= ( float )zMove / yMove;
+                    this->m_position.z -= ( float ) zMove / yMove;
                 }
             }
             else
@@ -180,11 +186,11 @@ void sphere::move()
 
                 if ( this->m_destination.z - this->m_position.z >= 0 )
                 {
-                    this->m_position.z += ( float )zMove / yMove;
+                    this->m_position.z += ( float ) zMove / yMove;
                 }
                 else
                 {
-                    this->m_position.z -= ( float )zMove / yMove;
+                    this->m_position.z -= ( float ) zMove / yMove;
                 }
             }
         }
@@ -193,7 +199,7 @@ void sphere::move()
     {
         if ( this->m_destination.x - this->m_position.x >= 0 )
         {
-            this->m_position.x += ( float )xMove / zMove;
+            this->m_position.x += ( float ) xMove / zMove;
 
             if ( this->m_destination.y - this->m_position.y >= 0 )
             {
@@ -224,7 +230,7 @@ void sphere::move()
         }
         else
         {
-            this->m_position.x -= ( float )xMove / zMove;
+            this->m_position.x -= ( float ) xMove / zMove;
 
             if ( this->m_destination.y - this->m_position.y >= 0 )
             {
@@ -245,11 +251,11 @@ void sphere::move()
 
                 if ( this->m_destination.z - this->m_position.z >= 0 )
                 {
-                    this->m_position.z += ( float )zMove / zMove;
+                    this->m_position.z += ( float ) zMove / zMove;
                 }
                 else
                 {
-                    this->m_position.z -= ( float )zMove / zMove;
+                    this->m_position.z -= ( float ) zMove / zMove;
                 }
             }
         }

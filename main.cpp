@@ -6,10 +6,10 @@
 #include "defines.h"
 #include "helper_functions.h"
 
-int grid_size {-1};
+int grid_size { -1};
 int snake_num = 1;
 // TODO Double check what *snake_size does and if snakeSize is not needed!
-int snakeSize {-1};
+int snakeSize { -1};
 int* snake_size;
 int** snake_position;
 int*** grid;
@@ -24,14 +24,14 @@ using namespace std;
 int main ( int argc, char** argv )
 {
     coord* coordinates;
-    Program project{argc, argv};
+    Program project {argc, argv};
 
 
     XYZ PointOnAxis;                                        // Stores x, y, z
     SizeOptions NumericArgs;                                // Stores every numeric argument
     ArgumentStatus ArgStatus;                               // Stores booleans for numerics arguments
 
-    ArgStatus = project.handleArguments(PointOnAxis, NumericArgs);
+    ArgStatus = project.handleArguments ( PointOnAxis, NumericArgs );
 
 
     // These variables are global, meaning they should appended a value
@@ -76,17 +76,17 @@ int main ( int argc, char** argv )
             while ( ( cout << "Snake's # " << i + 1 << "size: " ) &&
                     ( !cin >> snake_array[i].getSize() ) )
             {
-                if (!check_cin())
+                if ( !check_cin() )
                 {
                     cerr << "Something horrible happend with the input stream\n";
-                    exit(EXIT_FAILURE);
+                    exit ( EXIT_FAILURE );
                 }
             }
         }
         else
         {
             // Append the command line argument
-            snake_array[i].setSize(snakeSize);
+            snake_array[i].setSize ( snakeSize );
         }
 
     }
@@ -97,17 +97,18 @@ int main ( int argc, char** argv )
 
         if ( !ArgStatus.coordin_Arg_isSet )
         {
-            while (cout << "Position for snake #" << i + 1 << "(x,y,z): " &&
-                !(cin >> PointOnAxis.x >> PointOnAxis.y >> PointOnAxis.z))
-                    {
-                        if (!check_cin())
-                        {
-                            cerr << "Something horrible happend with the input stream\n";
-                            exit(EXIT_FAILURE);
-                        }
-                    }
+            while ( cout << "Position for snake #" << i + 1 << "(x,y,z): " &&
+                    ! ( cin >> PointOnAxis.x >> PointOnAxis.y >> PointOnAxis.z ) )
+            {
+                if ( !check_cin() )
+                {
+                    cerr << "Something horrible happend with the input stream\n";
+                    exit ( EXIT_FAILURE );
+                }
+            }
         }
-        snake_array[i].set_coordinates( PointOnAxis.x, PointOnAxis.y, PointOnAxis.z);
+
+        snake_array[i].set_coordinates ( PointOnAxis.x, PointOnAxis.y, PointOnAxis.z );
     }
 
     glutInit ( &argc, argv );

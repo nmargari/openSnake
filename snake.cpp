@@ -3,28 +3,33 @@
 
 using namespace std;
 
+// Constructors
+snake::snake() {};
+snake::snake ( int sz, coord* coordin ) : m_size ( sz ), m_coordinates ( coordin ) {};
+//
+
 int snake::getSize()
 {
     return this->m_size;
 }
 
-coord * snake::getCoord()
+coord* snake::getCoord()
 {
     return this->m_coordinates;
 }
 
-void snake::setSize( int sz )
+void snake::setSize ( int sz )
 {
     this->m_size = sz;
 }
 
-void snake::setCoord( coord* coordin )
+void snake::setCoord ( coord* coordin )
 {
     this->m_coordinates = coordin;
 }
 
 
-bool collision_detection( snake *s )
+bool collision_detection ( snake* s )
 {
     for ( int i = 0; i < snake_num; i++ )
     {
@@ -33,7 +38,7 @@ bool collision_detection( snake *s )
 
         for ( int j = 0; j < 2 * snake_array[i].getSize() - 1; j++ )
         {
-            if ( snake_array[i].getCoord()[j].x == s->getCoord()[0].x && snake_array[i].getCoord()[j].y == s->getCoord()[0].y && snake_array[i].getCoord()[j].z == s->getCoord()[0].z )
+            if ( snake_array[i].getCoord() [j].x == s->getCoord() [0].x && snake_array[i].getCoord() [j].y == s->getCoord() [0].y && snake_array[i].getCoord() [j].z == s->getCoord() [0].z )
             {
                 return true;
             }
@@ -44,7 +49,7 @@ bool collision_detection( snake *s )
 }
 
 
-void snake::set_coordinates( int x, int y, int z )
+void snake::set_coordinates ( int x, int y, int z )
 {
     this->m_coordinates = new coord [2 * this->m_size - 1];
 
@@ -83,7 +88,7 @@ void snake::set_coordinates( int x, int y, int z )
             //grid_table[(int)(this->coordinates[i].x + grid_size/2)][(int)(this->coordinates[i].y + grid_size/2)][(int)(this->coordinates[i - 1].z + grid_size/2 + 1)] = 1;
         }
     }
-    else if ( -( 2 * this->m_size + this->m_coordinates[0].x - 1 ) >= -grid_size / 2.0 )
+    else if ( - ( 2 * this->m_size + this->m_coordinates[0].x - 1 ) >= -grid_size / 2.0 )
     {
         for ( int i = 1; i < 2 * this->m_size - 1; i++ )
         {
@@ -93,7 +98,7 @@ void snake::set_coordinates( int x, int y, int z )
             //grid_table[(int)(this->coordinates[i - 1].x + grid_size/2 - 1)][(int)(this->coordinates[i].y + grid_size/2)][(int)(this->coordinates[i].z + grid_size/2)] = 1;
         }
     }
-    else if ( -( 2 * this->m_size + this->m_coordinates[0].y - 1 ) >= -grid_size / 2.0 )
+    else if ( - ( 2 * this->m_size + this->m_coordinates[0].y - 1 ) >= -grid_size / 2.0 )
     {
         for ( int i = 1; i < 2 * this->m_size - 1; i++ )
         {
@@ -103,7 +108,7 @@ void snake::set_coordinates( int x, int y, int z )
             //grid_table[(int)(this->coordinates[i].x + grid_size/2)][(int)(this->coordinates[i - 1].y + grid_size/2 - 1)][(int)(this->coordinates[i].z + grid_size/2)] = 1;
         }
     }
-    else if ( -( 2 * this->m_size + this->m_coordinates[0].z - 1 ) >= -grid_size / 2.0 )
+    else if ( - ( 2 * this->m_size + this->m_coordinates[0].z - 1 ) >= -grid_size / 2.0 )
     {
         for ( int i = 1; i < 2 * this->m_size - 1; i++ )
         {
@@ -123,8 +128,8 @@ void snake::random_move()
 
     for ( int i = 0; i < 2 * this->m_size - 1; i++ )
     {
-    again:
-        random = randomNumber( 0, 5 );
+again:
+        random = randomNumber ( 0, 5 );
 
         if ( i == 0 )
         {
@@ -155,7 +160,7 @@ void snake::random_move()
 
                     this->m_coordinates[i].y++;
 
-                    if ( collision_detection( this ) )
+                    if ( collision_detection ( this ) )
                     {
                         this->m_coordinates[i].y--;
                         goto again;
@@ -177,7 +182,7 @@ void snake::random_move()
 
                     this->m_coordinates[i].y--;
 
-                    if ( collision_detection( this ) )
+                    if ( collision_detection ( this ) )
                     {
                         this->m_coordinates[i].y++;
                         goto again;
@@ -199,7 +204,7 @@ void snake::random_move()
 
                     this->m_coordinates[i].x++;
 
-                    if ( collision_detection( this ) )
+                    if ( collision_detection ( this ) )
                     {
                         this->m_coordinates[i].x--;
                         goto again;
@@ -222,7 +227,7 @@ void snake::random_move()
 
                     this->m_coordinates[i].x--;
 
-                    if ( collision_detection( this ) )
+                    if ( collision_detection ( this ) )
                     {
                         this->m_coordinates[i].x++;
                         goto again;
@@ -244,7 +249,7 @@ void snake::random_move()
 
                     this->m_coordinates[i].z--;
 
-                    if ( collision_detection( this ) )
+                    if ( collision_detection ( this ) )
                     {
                         this->m_coordinates[i].z++;
                         goto again;
@@ -266,7 +271,7 @@ void snake::random_move()
 
                     this->m_coordinates[i].z++;
 
-                    if ( collision_detection( this ) )
+                    if ( collision_detection ( this ) )
                     {
                         this->m_coordinates[i].z--;
                         goto again;

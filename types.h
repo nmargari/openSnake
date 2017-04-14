@@ -1,54 +1,54 @@
 typedef struct coord
 {
-	float x;
-	float y;
-	float z;
+  float x;
+  float y;
+  float z;
 } coord;
 
 
 class sphere
 {
 private:
-    coord m_position;
-    coord m_destination;
+  coord m_position;
+  coord m_destination;
 
 public:
-    sphere();
-    sphere(coord& pos, coord& dest) : m_position(pos), m_destination(dest){};
+    sphere ();
+    sphere (coord & pos, coord & dest);
 
-    coord getPosition();
-    coord getDestination();
+  coord getPosition ();
+  coord getDestination ();
 
-    void setPosition(coord pos);
-    void setDestination(coord dest);
+  void setPosition (coord pos);
+  void setDestination (coord dest);
 
-    /*	coord position;
-	coord destination;*/
+  /*coord position;
+     coord destination; */
 
-	void setRandomCoord();
-	void move();
+  void setRandomCoord ();
+  void move ();
 };
 
 
 class snake
 {
 private:
-    int m_size;
-    coord* m_coordinates;
+  int m_size;
+  coord *m_coordinates;
 
 public:
-    snake();
-    snake(int sz, coord* coordin) : m_size(sz), m_coordinates(coordin){};
+    snake ();
+    snake (int sz, coord * coordin);
 
-    int getSize();
-    coord* getCoord();
+  int getSize ();
+  coord *getCoord ();
 
-    void setSize(int sz);
-    void setCoord(coord* coordin);
+  void setSize (int sz);
+  void setCoord (coord * coordin);
 
-	/*int size;
-	coord *coordinates;*/
+  /*int size;
+     coord *coordinates; */
 
-	void set_coordinates(int x, int y, int z);
-	void random_move();
+  void set_coordinates (int x, int y, int z);
+  void random_move ();
 };
