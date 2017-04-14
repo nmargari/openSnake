@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include "openSnakeConfig.h"
 #include "helper_functions.h"
@@ -63,7 +62,7 @@ ArgumentStatus Program::handleArguments(XYZ& PointOnAxis, SizeOptions& NumericAr
         TCLAP::ValueArg<int> numSnkArg ( "n", "number-snakes", "Number of snakes to create", false, 1, "int" );
         cmd.add ( numSnkArg );
 
-        TCLAP::ValueArg<int> sizeSnkArg ( "s", "snake-size", "Size of the snake(s)", false, 0, "int" );
+        TCLAP::ValueArg<int> sizeSnkArg ( "s", "snake-size", "Size of the snake(s)", false, 2, "int" );
         cmd.add ( sizeSnkArg );
 
         TCLAP::SwitchArg coordSnkArg ( "c", "coordinates", "Set coordinates to 0", cmd, false );
@@ -106,7 +105,6 @@ ArgumentStatus Program::handleArguments(XYZ& PointOnAxis, SizeOptions& NumericAr
 
         //////////////////////////////////////////////////////////////
         // This block of code checks if it's value is the proper
-        // is the proper.
 
         if (numSnkArg.isSet())
         {
@@ -127,12 +125,11 @@ ArgumentStatus Program::handleArguments(XYZ& PointOnAxis, SizeOptions& NumericAr
 
         //////////////////////////////////////////////////////////////
         // This block of code checks if it's value is the proper
-        //  is the proper.
-        // If the snake's size is near 20 the snake's size becomes = 1
+        // TODO Nikos how big should the snake begin it's life??
 
         if (sizeSnkArg.isSet())
         {
-            if (sizeSnkArg.getValue() > 16)
+            if (sizeSnkArg.getValue() > 20)
             {
                 TCLAP::ArgException exc("Way too big size of snakes!",
                     "--snake-size",
@@ -154,25 +151,29 @@ ArgumentStatus Program::handleArguments(XYZ& PointOnAxis, SizeOptions& NumericAr
         // End of -s checks
         ///////////////////////////////////////////////////////////
 
-        // Νο exception arrised, good to go!!
+        // Νο exception arrised, good to go!! Extract the numbers from
+        // the arguments and pass them to the struct
         NumericArgs.grid_size = gridSizeArg.getValue();
         NumericArgs.snake_num = numSnkArg.getValue();
         NumericArgs.snakeSize = sizeSnkArg.getValue();
 
 
-        // If the user gave -c, then append default (0) coordinates
-        if (coordSnkArg.getValue())
+        // If the user gave -c, then append default (0) coordinates and
+        // set TRUE the respective flag
+        if (coordSnkArg.isSet())
         {
             PointOnAxis.x = 0;
             PointOnAxis.y = 0;
             PointOnAxis.z = 0;
-            PointOnAxis.is_set = true;
+            ArgStatus.coordin_Arg_isSet = true;
         }
 
-        // If the user gave -a, then print about info
-        if (aboutArg.getValue())
+        // If the user gave -a, then print about info and set TRUE the
+        // respective flag
+        if (aboutArg.isSet())
         {
             cout << this->authorInfo() << endl;
+            ArgStatus.aboutInfo_Arg_isSet = true;
         }
 
       }

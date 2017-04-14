@@ -17,6 +17,9 @@ configure_file(
 
 find_package(OpenGL REQUIRED)
 find_package(GLUT REQUIRED)
+find_package(tclap REQUIRED)
+
+#message(STATUS "Found TCLAP under : ${TCLAP_INCLUDE_DIRS}")
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang" OR "${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
     #Force -Wall to catch every little warning

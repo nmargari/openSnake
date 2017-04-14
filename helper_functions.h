@@ -18,7 +18,6 @@ typedef struct XYZ{
     int x = -1;
     int y = -1;
     int z = -1;
-    bool is_set = false;
   } XYZ;
 
 typedef struct SizeOptions{
@@ -31,6 +30,8 @@ typedef struct ArgumentStatus{
     bool grid_Size_Arg_isSet = false;
     bool num_Snake_Arg_isSet = false;
     bool snke_Size_Arg_isSet = false;
+    bool aboutInfo_Arg_isSet = false;
+    bool coordin_Arg_isSet = false;
   } ArgumentStatus;
 
 

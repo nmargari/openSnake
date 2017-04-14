@@ -70,7 +70,7 @@ int main ( int argc, char** argv )
 
     for ( int i = 0; i < snake_num; i++ )
     {
-        if ( ! ( snakeSize ) )
+        if ( ! ( ArgStatus.snke_Size_Arg_isSet ) )
         {
             while ( ( cout << "Snake's # " << i + 1 << "size: " ) &&
                     ( !cin >> snake_array[i].size ) )
@@ -94,7 +94,7 @@ int main ( int argc, char** argv )
     {
         coordinates = new coord [2 * snake_array[i].size - 1];
 
-        if ( !PointOnAxis.is_set )
+        if ( !ArgStatus.coordin_Arg_isSet )
         {
             while (cout << "Position for snake #" << i + 1 << "(x,y,z): " &&
                 !(cin >> PointOnAxis.x >> PointOnAxis.y >> PointOnAxis.z))
