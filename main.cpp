@@ -73,41 +73,26 @@ int main ( int argc, char** argv )
     {
         if ( ! ( ArgStatus.snke_Size_Arg_isSet ) )
         {
-            while ( ( cout << "Snake's # " << i + 1 << "size: " ) &&
-                    ( !cin >> snake_array[i].getSize() ) )
-            {
-                if ( !check_cin() )
-                {
-                    cerr << "Something horrible happend with the input stream\n";
-                    exit ( EXIT_FAILURE );
-                }
-            }
+            // 4 is a magic number, a default for snake's size
+            snakeSize = 4;
         }
-        else
-        {
-            // Append the command line argument
-            snake_array[i].setSize ( snakeSize );
-        }
-
+        // Either append the user-set value, or take the 4 from above.
+        snake_array[i].setSize ( snakeSize );
     }
 
     for ( int i = 0; i < snake_num; i++ )
     {
         coordinates = new coord [2 * snake_array[i].getSize() - 1];
 
+        // If -c isn't set, then append random coordinates
         if ( !ArgStatus.coordin_Arg_isSet )
         {
-            while ( cout << "Position for snake #" << i + 1 << "(x,y,z): " &&
-                    ! ( cin >> PointOnAxis.x >> PointOnAxis.y >> PointOnAxis.z ) )
-            {
-                if ( !check_cin() )
-                {
-                    cerr << "Something horrible happend with the input stream\n";
-                    exit ( EXIT_FAILURE );
-                }
-            }
+            srand(time(NULL));
+            PointOnAxis.x = (rand() % 4) + 1;
+            PointOnAxis.y = (rand() % 4) + 1;
+            PointOnAxis.z = (rand() % 4) + 1;
         }
-
+        // Append either the default (0, 0, 0), or the random ones
         snake_array[i].set_coordinates ( PointOnAxis.x, PointOnAxis.y, PointOnAxis.z );
     }
 
