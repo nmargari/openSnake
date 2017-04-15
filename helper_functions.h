@@ -2,6 +2,9 @@
 #include <string>
 #include <iostream>
 
+#include <ctime>
+#include <cstdlib>
+
 #ifdef _WIN32                                               // If Win, then use "/opt" instead of --opt
 # define TCLAP_NAMESTARTSTRING "~~"
 # define TCLAP_FLAGSTARTSTRING "/"
