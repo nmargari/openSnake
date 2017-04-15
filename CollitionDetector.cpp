@@ -33,7 +33,6 @@ void CollitionDetector::random_move()
     int x, y, z, random, k, l, m;
 
 
-
     for ( int i = 0; i < 2 * this->m_size - 1; i++ )
     {
 again:

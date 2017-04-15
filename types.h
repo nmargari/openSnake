@@ -22,9 +22,6 @@ public:
   void setPosition (coord pos);
   void setDestination (coord dest);
 
-  /*coord position;
-     coord destination; */
-
   void setRandomCoord ();
   void move ();
 };
@@ -47,12 +44,10 @@ public:
   void setSize (int sz);
   void setCoord (coord * coordin);
 
-  /*int size;
-     coord *coordinates; */
-
   void set_coordinates (int x, int y, int z);
-  virtual void random_move ();
 
+  virtual void random_move ();
+  virtual bool collision_detection (snake * s);
 };
 
 class CollitionDetector:public snake
@@ -61,7 +56,7 @@ public:
   CollitionDetector ();
   ~CollitionDetector ();
 
-  void random_move ();
-  bool collision_detection (snake * s);
+  virtual void random_move ();
+  virtual bool collision_detection (snake * s);
 
 };
