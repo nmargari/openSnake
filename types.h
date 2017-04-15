@@ -1,3 +1,5 @@
+#ifndef TYPES_H
+# define TYPES_H
 typedef struct coord
 {
   float x;
@@ -60,3 +62,5 @@ public:
   virtual bool collision_detection (snake * s);
 
 };
+
+#endif
