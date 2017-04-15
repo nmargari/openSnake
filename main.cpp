@@ -4,84 +4,117 @@
 #include <GL/glut.h>
 
 #include "defines.h"
+#include "helper_functions.h"
 
-int grid_size;
-int snake_num;
-int *snake_size;
-int **snake_position;
-int ***grid;
+int grid_size { -1};
+int snake_num = 1;
+// TODO Double check what *snake_size does and if snakeSize is not needed!
+int snakeSize { -1};
+int* snake_size;
+int** snake_position;
+int*** grid;
 int timer = 500;
 //int ***grid_table;
 
-snake *snake_array;
+snake* snake_array = nullptr;
 sphere hugeSphere;
 
 using namespace std;
 
-int main(int argc, char** argv)
+int main ( int argc, char** argv )
 {
-	coord *coordinates;
-	int x, y, z;
+    coord* coordinates;
+    Program project {argc, argv};
 
-//Getting and setting our data
-	cout << "Grid size: ";
-	cin >> grid_size;
-	cout << "Snake number: ";
-	cin >> snake_num;
 
-	snake_array = new snake [snake_num];
+    XYZ PointOnAxis;                                        // Stores x, y, z
+    SizeOptions NumericArgs;                                // Stores every numeric argument
+    ArgumentStatus ArgStatus;                               // Stores booleans for numerics arguments
 
-	//grid_table = new int ** [grid_size];
+    ArgStatus = project.handleArguments ( PointOnAxis, NumericArgs );
+
+
+    // These variables are global, meaning they should appended a value
+    // and go on with their use, while struct just fufiled it's purpose;
+    // it passed variables from handleArguments, clean and tidy
+    grid_size = NumericArgs.grid_size;
+    snake_num = NumericArgs.snake_num;
+    snakeSize = NumericArgs.snakeSize;
+
+
+    snake_array = new snake [snake_num];
+
+    //grid_table = new int ** [grid_size];
 
 //setting the grid_table
-/*	for(int i = 0; i < grid_size; i++)
-	{
-		grid_table[i] = new int * [grid_size];
+    /*	for(int i = 0; i < grid_size; i++)
+    	{
+    		grid_table[i] = new int * [grid_size];
 
-		for(int j = 0; j < grid_size; j++)
-		{
-			grid_table[i][j] = new int [grid_size];
+    		for(int j = 0; j < grid_size; j++)
+    		{
+    			grid_table[i][j] = new int [grid_size];
 
-			for(int k = 0; k < grid_size; k++)
-			{
-				grid_table[i][j][k] = 0;
-			}
-		}
-		
-	}*/
+    			for(int k = 0; k < grid_size; k++)
+    			{
+    				grid_table[i][j][k] = 0;
+    			}
+    		}
 
-	for(int i = 0; i < snake_num; i++)
-	{
-		cout << "Snake's #" << i + 1 << " size: ";
-		cin >> snake_array[i].size;
-	}
+    	}*/
 
-	for(int i = 0; i < snake_num; i++)
-	{
-		coordinates = new coord [2 * snake_array[i].size - 1];
-		cout << "Position for snake #" << i + 1 << "(x,y,z): ";
-		cin >> x >> y >> z;
-		snake_array[i].set_coordinates(x, y, z);
-	}
-	
-    	glutInit(&argc, argv);
-    	glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-    	glutInitWindowSize (WIN_X_SIZE, WIN_Y_SIZE);
-    	glutCreateWindow("Open Snake"); 
+    // TODO In these fors, we can check ArgStatus.snake_Size_Arg_isSet and if FALSE,
+    // we can create an openGL dialog (or slider) to append our snake(s) the size etc. Rather
+    // than reading form cmd line the size, a dialog could do the job. This way we will avoid
+    // the situation in which the game is run from menu, (by definition)*command line* args will
+    // be missing and cin won't be able to cut it!!
 
-    	init ();
+    for ( int i = 0; i < snake_num; i++ )
+    {
+        if ( ! ( ArgStatus.snke_Size_Arg_isSet ) )
+        {
+            // 4 is a magic number, a default for snake's size
+            snakeSize = 4;
+        }
+        // Either append the user-set value, or take the 4 from above.
+        snake_array[i].setSize ( snakeSize );
+    }
 
-    	glutReshapeFunc(reshape); 
-    	glutDisplayFunc(display); 
-    	glutKeyboardFunc(keyboard);
-	//glutKeyboardUpFunc(keyboard);
-	//glutIgnoreKeyRepeat(1);
-    	glutSpecialFunc(specialKey);
+    for ( int i = 0; i < snake_num; i++ )
+    {
+        coordinates = new coord [2 * snake_array[i].getSize() - 1];
 
-	glutTimerFunc(timer, update, 0);
+        // If -c isn't set, then append random coordinates
+        if ( !ArgStatus.coordin_Arg_isSet )
+        {
+            srand(time(NULL));
+            PointOnAxis.x = (rand() % 4) + 1;
+            PointOnAxis.y = (rand() % 4) + 1;
+            PointOnAxis.z = (rand() % 4) + 1;
+        }
+        // Append either the default (0, 0, 0), or the random ones
+        snake_array[i].set_coordinates ( PointOnAxis.x, PointOnAxis.y, PointOnAxis.z );
+    }
 
-    	glutMainLoop();
+    glutInit ( &argc, argv );
+    glutInitDisplayMode ( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
+    glutInitWindowSize ( WIN_X_SIZE, WIN_Y_SIZE );
+    window = glutCreateWindow ( "Open Snake" );
+    //glutCreateWindow(project.getName());                    // Use this to automatically set the title
+    createMenu();
 
-    	return 0;
+    init ();
+
+    glutReshapeFunc ( reshape );
+    glutDisplayFunc ( display );
+    glutKeyboardFunc ( keyboard );
+    //glutKeyboardUpFunc(keyboard);
+    //glutIgnoreKeyRepeat(1);
+    glutSpecialFunc ( specialKey );
+
+    glutTimerFunc ( timer, update, 0 );
+
+    glutMainLoop();
+
+    return 0;
 }
-    

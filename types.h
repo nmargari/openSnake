@@ -1,29 +1,66 @@
+#ifndef TYPES_H
+# define TYPES_H
 typedef struct coord
 {
-	float x;
-	float y;
-	float z;
+  float x;
+  float y;
+  float z;
 } coord;
 
 
 class sphere
 {
-public:
-	coord position;
-	coord destination;
+private:
+  coord m_position;
+  coord m_destination;
 
-	void setRandomCoord();
-	void move();
+public:
+    sphere ();
+    sphere (coord & pos, coord & dest);
+
+  coord getPosition ();
+  coord getDestination ();
+
+  void setPosition (coord pos);
+  void setDestination (coord dest);
+
+  void setRandomCoord ();
+  void move ();
 };
 
 
 class snake
 {
-public:
-	int size;
-	coord *coordinates;
+protected:
+  int m_size;
+  coord *m_coordinates;
 
-	void set_coordinates(int x, int y, int z);
-	void random_move();
+public:
+    snake ();
+    snake (int sz, coord * coordin);
+    virtual ~ snake ();
+
+  int getSize ();
+  coord *getCoord ();
+
+  void setSize (int sz);
+  void setCoord (coord * coordin);
+
+  void set_coordinates (int x, int y, int z);
+
+  virtual void random_move ();
+  virtual bool collision_detection (snake * s);
 };
 
+class CollitionDetector:public snake
+{
+public:
+  CollitionDetector ();
+  ~CollitionDetector ();
+
+  virtual void random_move ();
+  virtual bool collision_detection (snake * s);
+
+};
+
+#endif

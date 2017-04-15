@@ -23,6 +23,7 @@
 
 extern int grid_size;
 extern int snake_num;
+extern int snakeSize;
 extern int *snake_size;
 extern int **snake_position;
 extern int ***grid;
@@ -32,18 +33,17 @@ extern int timer;
 extern sphere hugeSphere;
 
 
-void init(void);
-void display(void);
+void init (void);
+void display (void);
 void reshape (int w, int h);
 void keyboard (unsigned char key, int x, int y);
-void specialKey(int key, int x, int y);
-void createGrid(int size);
-void createSpace();
-void drawSnake();
-int randomNumber(int low, int high);
-void update(int value);
-void createLight(int i);
-void createSphere(sphere *s);
-float randomFNumber();
-void createAxis();
-
+void specialKey (int key, int x, int y);
+void createGrid (int size);
+void createSpace ();
+void drawSnake ();
+int randomNumber (int low, int high);
+void update (int value);
+void createLight (int i);
+void createSphere (sphere * s);
+float randomFNumber ();
+void createAxis ();
